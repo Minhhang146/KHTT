@@ -231,12 +231,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // Hiện tác phẩm (nếu bài có) phía trên các câu hỏi
-const khungTP = document.getElementById("tac-pham");
-if (khungTP && data.tac_pham) {
+if (data.tac_pham) {
   const tp = data.tac_pham;
+
+  // Tìm khung có sẵn, chưa có thì tự tạo rồi đặt ngay trên khung câu hỏi
+  let khungTP = document.getElementById("tac-pham");
+  if (!khungTP) {
+    khungTP = document.createElement("div");
+    khungTP.id = "tac-pham";
+    quizContainer.parentNode.insertBefore(khungTP, quizContainer);
+  }
+
+  khungTP.className = "tac-pham-box"; // dùng kiểu CSS đã dán ở style2.css
   khungTP.innerHTML = `
     <h2>${tp.ten}</h2>
     ${tp.tac_gia ? `<p class="tac-gia">Tác giả: ${tp.tac_gia}</p>` : ""}
     <div class="tac-pham-noi-dung">${tp.noi_dung}</div>`;
-  khungTP.classList.remove("hidden"); // có tác phẩm thì mới hiện khung
 }

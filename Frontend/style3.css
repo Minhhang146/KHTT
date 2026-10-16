@@ -5,3 +5,24 @@
     --nhan: #2457d6;
     --vien: #dfe5eeea;
 }
+/* Khung hiện tác phẩm trong bài đọc hiểu */
+.tac-pham-box {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px 24px;
+  background: var(--nen);
+  border: 1px solid var(--vien);
+  border-left: 4px solid var(--nhan); /* vạch xanh bên trái cho nổi */
+  border-radius: 12px;
+}
+
+.tac-pham-box .tac-gia {
+  color: var(--nhat);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+/* Giãn dòng rộng để đọc thơ, văn cho dễ */
+.tac-pham-noi-dung {
+  line-height: 1.9;
+}
