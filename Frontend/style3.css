@@ -26,3 +26,15 @@
 .tac-pham-noi-dung {
   line-height: 1.9;
 }
+
+/* Khung của mỗi bài (chứa tác phẩm + các câu hỏi) */
+.bai-tap-khung {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+/* Tiêu đề "Bài 1.1: ..." */
+.bai-tap-tieu-de {
+  color: var(--nhan);
+  margin-bottom: 12px;
+}

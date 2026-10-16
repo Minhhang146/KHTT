@@ -48,16 +48,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     noiDung.innerHTML = data.ly_thuyet || "<p>Bài này chưa có lý thuyết.</p>";
     nutMo.disabled = false; // tải xong rồi mới cho bấm nút
 
-    // Phần 2: danh sách câu, xếp từ dễ đến khó
-    const ds = document.getElementById("ds-cau");
-    const cauSapXep = [...data.cau_hoi].sort((a, b) => a.do_kho - b.do_kho);
+    // Phần 2: danh sách bài tập, xếp từ dễ đến khó
+    // File mới có "bai_tap"; file cũ chỉ có "cau_hoi" (mỗi câu coi như 1 bài)
+    const dsBai = Array.isArray(data.bai_tap)
+      ? data.bai_tap
+      : (data.cau_hoi || []).map((c) => ({ id: c.id, do_kho: c.do_kho, cau_hoi: [c] }));
 
-    cauSapXep.forEach((cau) => {
+    const ds = document.getElementById("ds-cau");
+    const baiSapXep = [...dsBai].sort((a, b) => a.do_kho - b.do_kho);
+
+    baiSapXep.forEach((bai) => {
       const a = document.createElement("a");
       a.className = "btn";
-      a.textContent = `Câu ${cau.id}`;
-      // Bấm vào thì sang form.html, kèm số câu (q) để form biết hiện câu nào
-      a.href = `form.html?subject=${subject}&chapter=${chapter}&article=${article}&q=${cau.id}`;
+      // Hiện "Bài 1.1" kèm số câu bên trong, vd: "Bài 1.1 (12 câu)"
+      const soCau = (bai.cau_hoi || []).length;
+      a.textContent = `Bài ${bai.id} (${soCau} câu)`;
+      // Bấm vào thì sang form.html, kèm số bài (q) để form biết hiện bài nào
+      a.href = `form.html?subject=${subject}&chapter=${chapter}&article=${article}&q=${bai.id}`;
       ds.appendChild(a);
     });
   } catch (err) {

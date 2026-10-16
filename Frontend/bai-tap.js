@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const subject = (params.get("subject") || "toan").replace("-", "_");
   const chapter = params.get("chapter");
   const article = params.get("article");
-  const q = params.get("q"); // câu muốn làm, ví dụ "1.1" (không có thì hiện cả bài)
+  const q = params.get("q"); // bài muốn làm, ví dụ "1.1" (không có thì hiện cả bài học)
 
   const problemList = document.getElementById("problem-list");
   const chapterSidebar = document.querySelector(".chapter-sidebar");
@@ -74,9 +74,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // =========================================================================
-  // 2. TRANG FORM.HTML (HIỆN CÂU HỎI + ĐIỂM + NÚT NỘP BÀI)
+  // 2. TRANG FORM.HTML (HIỆN BÀI TẬP + CÂU HỎI + NÚT NỘP BÀI)
   // =========================================================================
   const quizContainer = document.getElementById("quiz-container");
+
+  // File cũ (vd: Toán) chỉ có "cau_hoi" -> coi mỗi câu là 1 bài có đúng 1 câu
+  // File mới có "bai_tap" -> mỗi bài chứa nhiều câu hỏi nhỏ
+  function layDanhSachBai(data) {
+    if (Array.isArray(data.bai_tap)) return data.bai_tap;
+    return (data.cau_hoi || []).map((c) => ({
+      id: c.id,
+      do_kho: c.do_kho,
+      tac_pham: data.tac_pham,
+      cau_hoi: [c],
+    }));
+  }
 
   if (quizContainer && subject && chapter && article) {
     try {
@@ -84,80 +96,109 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!response.ok) throw new Error("Không thể tải file nội dung bài học.");
 
       const data = await response.json();
-      const tatCa = data.cau_hoi || [];
+      const tatCaBai = layDanhSachBai(data);
 
-      if (data.tac_pham) {
-        const tp = data.tac_pham;
+      // Địa chỉ có &q=1.1 thì chỉ giữ đúng bài đó, không có thì giữ hết
+      const dsBai = q ? tatCaBai.filter((b) => String(b.id) === q) : tatCaBai;
 
-        // Tìm khung có sẵn, chưa có thì tự tạo rồi đặt ngay trên khung câu hỏi
-        let khungTP = document.getElementById("tac-pham");
-        if (!khungTP) {
-          khungTP = document.createElement("div");
-          khungTP.id = "tac-pham";
-          quizContainer.parentNode.insertBefore(khungTP, quizContainer);
-        }
-
-        khungTP.className = "tac-pham-box"; // dùng kiểu CSS đã dán ở style2.css
-        khungTP.innerHTML = `
-          <h2>${tp.ten}</h2>
-          ${tp.tac_gia ? `<p class="tac-gia">Tác giả: ${tp.tac_gia}</p>` : ""}
-          <div class="tac-pham-noi-dung">${tp.noi_dung}</div>`;
-      }
-
-      // Nếu địa chỉ có &q=1.1 thì chỉ giữ đúng câu đó, không có thì giữ hết
-      const dsCau = q ? tatCa.filter((c) => String(c.id) === q) : tatCa;
-
-      if (dsCau.length === 0) {
-        quizContainer.insertAdjacentHTML("afterbegin", `<p>Không tìm thấy câu hỏi này.</p>`);
+      if (dsBai.length === 0) {
+        quizContainer.insertAdjacentHTML("afterbegin", `<p>Không tìm thấy bài này.</p>`);
         return;
       }
 
       // Điểm mỗi câu: lấy trong JSON, không có thì mặc định 10
       const diemCua = (cau) => cau.diem ?? 10;
 
-      // ----- Vẽ từng câu hỏi -----
-      dsCau.forEach((cau, index) => {
-        const targetDiv = quizContainer.querySelector(`[data-type="${cau.type}"]`);
-        if (!targetDiv) return;
+      // Thư mục hình của 1 bài: img/<môn>/<chương>/<bài học>/<bài tập>/
+      // vd: img/ngu_van/chuong-1/bai-01/1.1/
+      const duongDanHinh = (bai, tenFile) =>
+        `img/${subject}/${chapter}/${article}/${bai.id}/${tenFile}`;
 
-        const cauHtml = document.createElement("div");
-        cauHtml.className = "question-card";
-        cauHtml.style.marginBottom = "16px";
+      // Biến danh sách tên file thành các thẻ <img> (nhận cả 1 tên lẫn 1 mảng tên)
+      const veHinh = (ds, bai, lop) => {
+        const mang = !ds ? [] : Array.isArray(ds) ? ds : [ds];
+        return mang
+          .map((ten) => `<img class="${lop}" src="${duongDanHinh(bai, ten)}" alt="Hình minh hoạ" loading="lazy">`)
+          .join("");
+      };
 
-        // Dòng tiêu đề có hiện điểm của câu
-        const tieuDe = `<p><b>Câu ${cau.id ?? index + 1}</b>
-          <span style="color:#2457d6; font-weight:600;">(${diemCua(cau)} điểm)</span>:
-          ${cau.de_bai}</p>`;
+      // Nơi nhớ từng câu cùng ô hiển thị của nó (để chấm điểm sau)
+      const dsCau = [];
 
-        if (cau.type === "trac-nghiem") {
-          cauHtml.innerHTML = `
-            ${tieuDe}
-            ${cau.dap_an.map((item, i) => `
-              <label style="display:block; margin-top:4px;">
-                <input type="radio" name="q-${index}" value="${i}"> ${item}
-              </label>`).join("")}
-          `;
-        } else if (cau.type === "dung-sai") {
-          cauHtml.innerHTML = `
-            ${tieuDe}
-            <label style="margin-right:15px;">
-              <input type="radio" name="q-${index}" value="true"> Đúng
-            </label>
-            <label>
-              <input type="radio" name="q-${index}" value="false"> Sai
-            </label>
-          `;
-        } else if (cau.type === "tra-loi-ngan") {
-          cauHtml.innerHTML = `
-            ${tieuDe}
-            <input type="text" name="q-${index}" placeholder="Nhập câu trả lời..."
-                   style="padding:6px; width:100%; max-width:300px;">
-          `;
+      // ----- Vẽ từng bài -----
+      dsBai.forEach((bai, baiIdx) => {
+        const khungBai = document.createElement("section");
+        khungBai.className = "bai-tap-khung";
+
+        // Tiêu đề bài, vd: "Bài 1.1: Đọc hiểu Lão Hạc"
+        khungBai.insertAdjacentHTML(
+          "beforeend",
+          `<h2 class="bai-tap-tieu-de">Bài ${bai.id}${bai.ten ? ": " + bai.ten : ""}</h2>`
+        );
+
+        // Tác phẩm + hình của bài (nếu có)
+        if (bai.tac_pham) {
+          const tp = bai.tac_pham;
+          khungBai.insertAdjacentHTML(
+            "beforeend",
+            `<div class="tac-pham-box">
+               <h3>${tp.ten || ""}</h3>
+               ${tp.tac_gia ? `<p class="tac-gia">Tác giả: ${tp.tac_gia}</p>` : ""}
+               ${veHinh(tp.hinh, bai, "tac-pham-hinh")}
+               <div class="tac-pham-noi-dung">${tp.noi_dung || ""}</div>
+             </div>`
+          );
         }
 
-        // Chỗ hiện kết quả sau khi nộp (đúng/sai + gợi ý + lời giải)
-        cauHtml.insertAdjacentHTML("beforeend", `<div class="ket-qua-cau" style="margin-top:8px;"></div>`);
-        targetDiv.appendChild(cauHtml);
+        // Các câu hỏi nhỏ trong bài
+        (bai.cau_hoi || []).forEach((cau, i) => {
+          const name = `q-${baiIdx}-${i}`; // tên nhóm ô chọn, mỗi câu một tên riêng
+
+          const cauHtml = document.createElement("div");
+          cauHtml.className = "question-card";
+          cauHtml.style.marginBottom = "16px";
+
+          // Dòng tiêu đề có hiện điểm của câu + hình riêng của câu (nếu có)
+          const tieuDe = `<p><b>Câu ${cau.id ?? i + 1}</b>
+            <span style="color:#2457d6; font-weight:600;">(${diemCua(cau)} điểm)</span>:
+            ${cau.de_bai}</p>
+            ${veHinh(cau.hinh, bai, "tac-pham-hinh")}`;
+
+          if (cau.type === "trac-nghiem") {
+            cauHtml.innerHTML = `
+              ${tieuDe}
+              ${cau.dap_an.map((item, k) => `
+                <label style="display:block; margin-top:4px;">
+                  <input type="radio" name="${name}" value="${k}"> ${item}
+                </label>`).join("")}
+            `;
+          } else if (cau.type === "dung-sai") {
+            cauHtml.innerHTML = `
+              ${tieuDe}
+              <label style="margin-right:15px;">
+                <input type="radio" name="${name}" value="true"> Đúng
+              </label>
+              <label>
+                <input type="radio" name="${name}" value="false"> Sai
+              </label>
+            `;
+          } else if (cau.type === "tra-loi-ngan") {
+            cauHtml.innerHTML = `
+              ${tieuDe}
+              <input type="text" name="${name}" placeholder="Nhập câu trả lời..."
+                     style="padding:6px; width:100%; max-width:300px;">
+            `;
+          } else {
+            return; // loại câu lạ thì bỏ qua
+          }
+
+          // Chỗ hiện kết quả sau khi nộp (đúng/sai + gợi ý + lời giải)
+          cauHtml.insertAdjacentHTML("beforeend", `<div class="ket-qua-cau" style="margin-top:8px;"></div>`);
+          khungBai.appendChild(cauHtml);
+          dsCau.push({ cau, card: cauHtml });
+        });
+
+        quizContainer.appendChild(khungBai);
       });
 
       // ----- Tạo nút Nộp bài và khung hiện tổng điểm -----
@@ -179,8 +220,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         let diemDat = 0;
         let diemToiDa = 0;
 
-        dsCau.forEach((cau, index) => {
-          const card = quizContainer.querySelectorAll(".question-card")[index];
+        dsCau.forEach(({ cau, card }) => {
           const o = card.querySelector(".ket-qua-cau");
           diemToiDa += diemCua(cau);
 
@@ -247,14 +287,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
-
-// Hiện tác phẩm (nếu bài có) phía trên các câu hỏi
-
-
-
-
-
-
-
-
-// cái đéo máááááááááááááááááááááááááááááááááááááááááááááááááááááááááááááááá
