@@ -1,15 +1,15 @@
 {
-  "ly_thuyet": "<p>Đọc hiểu thơ: tìm hình ảnh, biện pháp tu từ, cảm xúc.</p>",
-  "tac_pham": { 
-    "ten": "Tên bài thơ", 
-    "tac_gia": "Tên tác giả", 
-    "noi_dung": "<p>Dòng 1<br>Dòng 2</p>" },
+  "ly_thuyet": "<p>Đọc hiểu: xác định nhân vật, sự việc, ý nghĩa.</p>",
+  "tac_pham": {
+    "ten": "Tên truyện",
+    "tac_gia": "Tên tác giả",
+    "noi_dung": "<p>Đoạn 1 của đoạn trích...</p><p>Đoạn 2 của đoạn trích...</p>"
+  },
   "cau_hoi": [
-    { "id": "1.1", "do_kho": 2, "type": "trac-nghiem",
-      "de_bai": "Bài thơ viết theo thể thơ nào?",
-      "dap_an": ["Thơ bốn chữ", "Thơ năm chữ", "Thơ lục bát", "Thơ tự do"],
-      "dap_an_dung": 2,
-      "goi_y": "Đếm số chữ ở mỗi dòng",
-      "loi_giai": "Dòng 6 chữ xen dòng 8 chữ là thơ lục bát." }
+    { "id": "1.1", "do_kho": 1, "type": "tra-loi-ngan",
+      "de_bai": "Đoạn trích kể về nhân vật nào?",
+      "dap_an_dung": "Tên nhân vật",
+      "goi_y": "Đọc kĩ câu đầu tiên",
+      "loi_giai": "Nhân vật chính xuất hiện ngay ở câu mở đầu." }
   ]
 }

@@ -86,6 +86,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       const data = await response.json();
       const tatCa = data.cau_hoi || [];
 
+      if (data.tac_pham) {
+        const tp = data.tac_pham;
+
+        // Tìm khung có sẵn, chưa có thì tự tạo rồi đặt ngay trên khung câu hỏi
+        let khungTP = document.getElementById("tac-pham");
+        if (!khungTP) {
+          khungTP = document.createElement("div");
+          khungTP.id = "tac-pham";
+          quizContainer.parentNode.insertBefore(khungTP, quizContainer);
+        }
+
+        khungTP.className = "tac-pham-box"; // dùng kiểu CSS đã dán ở style2.css
+        khungTP.innerHTML = `
+          <h2>${tp.ten}</h2>
+          ${tp.tac_gia ? `<p class="tac-gia">Tác giả: ${tp.tac_gia}</p>` : ""}
+          <div class="tac-pham-noi-dung">${tp.noi_dung}</div>`;
+      }
+
       // Nếu địa chỉ có &q=1.1 thì chỉ giữ đúng câu đó, không có thì giữ hết
       const dsCau = q ? tatCa.filter((c) => String(c.id) === q) : tatCa;
 
@@ -231,20 +249,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // Hiện tác phẩm (nếu bài có) phía trên các câu hỏi
-if (data.tac_pham) {
-  const tp = data.tac_pham;
 
-  // Tìm khung có sẵn, chưa có thì tự tạo rồi đặt ngay trên khung câu hỏi
-  let khungTP = document.getElementById("tac-pham");
-  if (!khungTP) {
-    khungTP = document.createElement("div");
-    khungTP.id = "tac-pham";
-    quizContainer.parentNode.insertBefore(khungTP, quizContainer);
-  }
 
-  khungTP.className = "tac-pham-box"; // dùng kiểu CSS đã dán ở style2.css
-  khungTP.innerHTML = `
-    <h2>${tp.ten}</h2>
-    ${tp.tac_gia ? `<p class="tac-gia">Tác giả: ${tp.tac_gia}</p>` : ""}
-    <div class="tac-pham-noi-dung">${tp.noi_dung}</div>`;
-}
+
+
+
+
+
+
+// cái đéo máááááááááááááááááááááááááááááááááááááááááááááááááááááááááááááááá
