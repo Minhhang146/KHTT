@@ -5,6 +5,7 @@
       "id_chuong": "chuong-1",
       "ten_chuong": "Bài 1: Thế Giới Kì Ảo",
       "danh_sach_bai": [
+        { "id": "01", "ten_bai": "Truyện truyền kì", "diem": 100 }
       ]
     },
     {

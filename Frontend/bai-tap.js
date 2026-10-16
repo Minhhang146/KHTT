@@ -229,3 +229,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
+
+// Hiện tác phẩm (nếu bài có) phía trên các câu hỏi
+const khungTP = document.getElementById("tac-pham");
+if (khungTP && data.tac_pham) {
+  const tp = data.tac_pham;
+  khungTP.innerHTML = `
+    <h2>${tp.ten}</h2>
+    ${tp.tac_gia ? `<p class="tac-gia">Tác giả: ${tp.tac_gia}</p>` : ""}
+    <div class="tac-pham-noi-dung">${tp.noi_dung}</div>`;
+  khungTP.classList.remove("hidden"); // có tác phẩm thì mới hiện khung
+}
