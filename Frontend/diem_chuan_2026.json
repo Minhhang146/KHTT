@@ -1,0 +1,636 @@
+{
+  "Dong Thap": [
+    {
+      "id": 1,
+      "ten_truong": "THPT Châu Thành 1",
+      "vi_do": 10.2714202,
+      "kinh_do": 105.822347,
+      "diem_2026": 8.3,
+      "diem_2025": 11.0
+    },
+    {
+      "id": 2,
+      "ten_truong": "THPT Châu Thành 2",
+      "vi_do": 10.2603129,
+      "kinh_do": 105.8753157,
+      "diem_2026": 8.15,
+      "diem_2025": 10.5
+    },
+    {
+      "id": 3,
+      "ten_truong": "THPT Tân Phú Trung",
+      "vi_do": 10.2476081,
+      "kinh_do": 105.760259,
+      "diem_2026": 8.7,
+      "diem_2025": 10.75
+    },
+    {
+      "id": 4,
+      "ten_truong": "THPT Lai Vung 1",
+      "vi_do": 10.279798,
+      "kinh_do": 105.640409,
+      "diem_2026": 13.75,
+      "diem_2025": 13.75
+    },
+    {
+      "id": 5,
+      "ten_truong": "THPT Lai Vung 2",
+      "vi_do": 10.1882395,
+      "kinh_do": 105.6347853,
+      "diem_2026": 9.7,
+      "diem_2025": 9.75
+    },
+    {
+      "id": 6,
+      "ten_truong": "THPT Lai Vung 3",
+      "vi_do": 10.264689,
+      "kinh_do": 105.6347853,
+      "diem_2026": 8.0,
+      "diem_2025": 10.0
+    },
+    {
+      "id": 7,
+      "ten_truong": "THPT Cao Lãnh 1",
+      "vi_do": 10.462935,
+      "kinh_do": 105.622463,
+      "diem_2026": 12.45,
+      "diem_2025": 4.75
+    },
+    {
+      "id": 8,
+      "ten_truong": "THPT Cao Lãnh 2",
+      "vi_do": 10.3529,
+      "kinh_do": 105.780549,
+      "diem_2026": 9.8,
+      "diem_2025": 9.63
+    },
+    {
+      "id": 9,
+      "ten_truong": "THPT Thống Linh",
+      "vi_do": 10.5274214,
+      "kinh_do": 105.6619451,
+      "diem_2026": 12.15,
+      "diem_2025": 8.5
+    },
+    {
+      "id": 10,
+      "ten_truong": "THPT Kiến Văn",
+      "vi_do": 10.391457,
+      "kinh_do": 105.7347886,
+      "diem_2026": 8.0,
+      "diem_2025": 8.75
+    },
+    {
+      "id": 11,
+      "ten_truong": "THPT Hồng Ngự 2",
+      "vi_do": 10.718734,
+      "kinh_do": 105.292455,
+      "diem_2026": 5.05,
+      "diem_2025": 11.0
+    },
+    {
+      "id": 12,
+      "ten_truong": "THPT Hồng Ngự 3",
+      "vi_do": 10.811901,
+      "kinh_do": 105.246384,
+      "diem_2026": 13.95,
+      "diem_2025": 11.88
+    },
+    {
+      "id": 13,
+      "ten_truong": "THPT Long Khánh A",
+      "vi_do": 10.7902949,
+      "kinh_do": 105.3089549,
+      "diem_2026": 7.55,
+      "diem_2025": 12.75
+    },
+    {
+      "id": 14,
+      "ten_truong": "Giáo Dục Thường Xuyên(Sa Đéc)",
+      "vi_do": 10.2954847,
+      "kinh_do": 105.7567235,
+      "diem_2026": 1.1,
+      "diem_2025": null
+    },
+    {
+      "id": 15,
+      "ten_truong": "THPT Lấp Vò 1",
+      "vi_do": 10.3530131,
+      "kinh_do": 105.5053257,
+      "diem_2026": 16.2,
+      "diem_2025": 12.75
+    },
+    {
+      "id": 16,
+      "ten_truong": "THPT Lấp Vò 2",
+      "vi_do": 10.4079171,
+      "kinh_do": 105.6426537,
+      "diem_2026": 11.0,
+      "diem_2025": 10.5
+    },
+    {
+      "id": 17,
+      "ten_truong": "THPT Lấp Vò 3",
+      "vi_do": 10.321214,
+      "kinh_do": 105.639295,
+      "diem_2026": 10.4,
+      "diem_2025": 10.25
+    },
+    {
+      "id": 18,
+      "ten_truong": "THPT Tràm Chim",
+      "vi_do": 10.677526,
+      "kinh_do": 105.557326,
+      "diem_2026": 8.05,
+      "diem_2025": 11.38
+    },
+    {
+      "id": 19,
+      "ten_truong": "THPT Tam Nông",
+      "vi_do": 10.6956793,
+      "kinh_do": 105.3804277,
+      "diem_2026": 8.0,
+      "diem_2025": 8.25
+    },
+    {
+      "id": 20,
+      "ten_truong": "THPT Tân Hồng",
+      "vi_do": 10.877455,
+      "kinh_do": 105.457044,
+      "diem_2026": 9.65,
+      "diem_2025": 4.5
+    },
+    {
+      "id": 21,
+      "ten_truong": "THPT Thanh Bình 1",
+      "vi_do": 10.554423,
+      "kinh_do": 105.495006,
+      "diem_2026": 14.0,
+      "diem_2025": 10.5
+    },
+    {
+      "id": 22,
+      "ten_truong": "THPT Thanh Bình 2",
+      "vi_do": 10.6144971,
+      "kinh_do": 105.3975105,
+      "diem_2026": 7.2,
+      "diem_2025": 10.0
+    },
+    {
+      "id": 23,
+      "ten_truong": "THPT Tháp Mười",
+      "vi_do": 10.5207375,
+      "kinh_do": 105.8455032,
+      "diem_2026": 8.75,
+      "diem_2025": 13.25
+    },
+    {
+      "id": 24,
+      "ten_truong": "THPT Mỹ Quý",
+      "vi_do": 10.524803,
+      "kinh_do": 105.7287003,
+      "diem_2026": 9.05,
+      "diem_2025": 9.0
+    },
+    {
+      "id": 25,
+      "ten_truong": "THPT Trường Xuân",
+      "vi_do": 10.652201,
+      "kinh_do": 105.787765,
+      "diem_2026": 8.25,
+      "diem_2025": 9.25
+    },
+    {
+      "id": 26,
+      "ten_truong": "THPT Phú Điền",
+      "vi_do": 10.4542063,
+      "kinh_do": 105.891319,
+      "diem_2026": 10.35,
+      "diem_2025": 10.75
+    },
+    {
+      "id": 27,
+      "ten_truong": "THPT Đốc Binh Kiều",
+      "vi_do": 10.407041,
+      "kinh_do": 106.126204,
+      "diem_2026": 8.0,
+      "diem_2025": 9.75
+    },
+    {
+      "id": 28,
+      "ten_truong": "THPT TP Cao Lãnh",
+      "vi_do": 10.463219,
+      "kinh_do": 105.6201674,
+      "diem_2026": 21.25,
+      "diem_2025": 19.5
+    },
+    {
+      "id": 29,
+      "ten_truong": "THPT Trần Quốc Toản",
+      "vi_do": 10.4877908,
+      "kinh_do": 105.5634477,
+      "diem_2026": 8.1,
+      "diem_2025": 10.0
+    },
+    {
+      "id": 30,
+      "ten_truong": "THPT Thiên Hộ Dương (Cao Lãnh)",
+      "vi_do": 10.4247628,
+      "kinh_do": 105.6317598,
+      "diem_2026": 8.1,
+      "diem_2025": 12.0
+    },
+    {
+      "id": 31,
+      "ten_truong": "THPT Đỗ Công Tưởng",
+      "vi_do": 10.464722,
+      "kinh_do": 105.620624,
+      "diem_2026": 11.15,
+      "diem_2025": 13.25
+    },
+    {
+      "id": 32,
+      "ten_truong": "THPT Hồng Ngự 1",
+      "vi_do": 10.79345,
+      "kinh_do": 105.346946,
+      "diem_2026": 8.0,
+      "diem_2025": null
+    },
+    {
+      "id": 33,
+      "ten_truong": "THPT Chu Văn An",
+      "vi_do": 10.817277,
+      "kinh_do": 105.34348,
+      "diem_2026": 11.7,
+      "diem_2025": 14.75
+    },
+    {
+      "id": 34,
+      "ten_truong": "THPT thành phố Hồng Ngự",
+      "vi_do": 10.7941603,
+      "kinh_do": 105.3444728,
+      "diem_2026": null,
+      "diem_2025": 9.75
+    },
+    {
+      "id": 35,
+      "ten_truong": "THPT TP Sa Đéc",
+      "vi_do": 10.293492,
+      "kinh_do": 105.758333,
+      "diem_2026": 18.1,
+      "diem_2025": 13.5
+    },
+    {
+      "id": 36,
+      "ten_truong": "THPT Nguyễn Du",
+      "vi_do": 10.7790935,
+      "kinh_do": 106.6598084,
+      "diem_2026": 11.0,
+      "diem_2025": 10.75
+    },
+    {
+      "id": 37,
+      "ten_truong": "THPT Lê Văn Phẩm",
+      "vi_do": 10.493628,
+      "kinh_do": 106.093645,
+      "diem_2026": 8.0,
+      "diem_2025": null
+    },
+    {
+      "id": 38,
+      "ten_truong": "THPT Đốc Binh Kiều - Cai Lậy",
+      "vi_do": 10.407041,
+      "kinh_do": 106.126204,
+      "diem_2026": 18.15,
+      "diem_2025": null
+    },
+    {
+      "id": 39,
+      "ten_truong": "THPT Tứ Kiệt",
+      "vi_do": 10.4026622,
+      "kinh_do": 106.1368141,
+      "diem_2026": 10.05,
+      "diem_2025": null
+    },
+    {
+      "id": 40,
+      "ten_truong": "THPT Nguyễn Đình Chiểu(MỸ THO)",
+      "vi_do": 10.359015,
+      "kinh_do": 106.365662,
+      "diem_2026": 25.6,
+      "diem_2025": null
+    },
+    {
+      "id": 41,
+      "ten_truong": "THPT Trần Hưng Đạo",
+      "vi_do": 10.356926,
+      "kinh_do": 106.356745,
+      "diem_2026": 17.1,
+      "diem_2025": null
+    },
+    {
+      "id": 42,
+      "ten_truong": "THPT Phước Thạnh",
+      "vi_do": 10.383985,
+      "kinh_do": 106.3032898,
+      "diem_2026": 14.05,
+      "diem_2025": null
+    },
+    {
+      "id": 43,
+      "ten_truong": "THPT Nguyễn Đình Chiểu (Mekong)",
+      "vi_do": 10.359015,
+      "kinh_do": 106.365662,
+      "diem_2026": 22.15,
+      "diem_2025": null
+    },
+    {
+      "id": 44,
+      "ten_truong": "THPT Phạm Thành Trung",
+      "vi_do": 10.329132,
+      "kinh_do": 105.894683,
+      "diem_2026": 15.6,
+      "diem_2025": null
+    },
+    {
+      "id": 45,
+      "ten_truong": "THPT Thiên Hộ Dương (Hậu Mỹ)",
+      "vi_do": 10.503536,
+      "kinh_do": 105.9696174,
+      "diem_2026": 10.05,
+      "diem_2025": null
+    },
+    {
+      "id": 46,
+      "ten_truong": "THPT Cái Bè",
+      "vi_do": 10.3452772,
+      "kinh_do": 106.0344832,
+      "diem_2026": 19.5,
+      "diem_2025": null
+    },
+    {
+      "id": 47,
+      "ten_truong": "THPT Phạm Thành Trung",
+      "vi_do": null,
+      "kinh_do": null,
+      "diem_2026": null,
+      "diem_2025": null
+    },
+    {
+      "id": 48,
+      "ten_truong": "THPT Huỳnh Văn Sâm",
+      "vi_do": 10.3504126,
+      "kinh_do": 106.0333161,
+      "diem_2026": 14.2,
+      "diem_2025": null
+    },
+    {
+      "id": 49,
+      "ten_truong": "THPT Lưu Tấn Phát",
+      "vi_do": 10.3158359,
+      "kinh_do": 106.1187269,
+      "diem_2026": 15.6,
+      "diem_2025": null
+    },
+    {
+      "id": 50,
+      "ten_truong": "THPT Phan Việt Thống",
+      "vi_do": 10.4219486,
+      "kinh_do": 106.0818716,
+      "diem_2026": 12.3,
+      "diem_2025": null
+    },
+    {
+      "id": 51,
+      "ten_truong": "THPT Dưỡng Điềm",
+      "vi_do": 10.3989777,
+      "kinh_do": 106.2082388,
+      "diem_2026": 15.0,
+      "diem_2025": null
+    },
+    {
+      "id": 52,
+      "ten_truong": "THPT Vĩnh Kim",
+      "vi_do": 10.3595638,
+      "kinh_do": 106.241733,
+      "diem_2026": 17.65,
+      "diem_2025": null
+    },
+    {
+      "id": 53,
+      "ten_truong": "THPT Tân Hiệp",
+      "vi_do": 10.4494039,
+      "kinh_do": 106.3300758,
+      "diem_2026": 18.1,
+      "diem_2025": null
+    },
+    {
+      "id": 54,
+      "ten_truong": "THPT Nam Kỳ Khởi Nghĩa",
+      "vi_do": 10.446945,
+      "kinh_do": 106.343406,
+      "diem_2026": 10.1,
+      "diem_2025": null
+    },
+    {
+      "id": 55,
+      "ten_truong": "THPT Thủ Khoa Huân",
+      "vi_do": 10.460887,
+      "kinh_do": 106.382769,
+      "diem_2026": 11.05,
+      "diem_2025": null
+    },
+    {
+      "id": 56,
+      "ten_truong": "THPT Chợ Gạo",
+      "vi_do": 10.349982,
+      "kinh_do": 106.468152,
+      "diem_2026": 21.1,
+      "diem_2025": null
+    },
+    {
+      "id": 57,
+      "ten_truong": "THPT Bình Phục Nhứt",
+      "vi_do": 10.3922267,
+      "kinh_do": 106.5124887,
+      "diem_2026": 10.05,
+      "diem_2025": null
+    },
+    {
+      "id": 58,
+      "ten_truong": "THPT Trần Văn Hoài",
+      "vi_do": 10.350115,
+      "kinh_do": 106.469878,
+      "diem_2026": 13.1,
+      "diem_2025": null
+    },
+    {
+      "id": 59,
+      "ten_truong": "THPT Gò Công Đông",
+      "vi_do": 10.397448,
+      "kinh_do": 106.716135,
+      "diem_2026": 15.45,
+      "diem_2025": null
+    },
+    {
+      "id": 60,
+      "ten_truong": "THPT Nguyễn Văn Côn",
+      "vi_do": 10.316209,
+      "kinh_do": 106.716374,
+      "diem_2026": 11.45,
+      "diem_2025": null
+    },
+    {
+      "id": 61,
+      "ten_truong": "THPT Vĩnh Bình",
+      "vi_do": 10.361328,
+      "kinh_do": 106.5794601,
+      "diem_2026": 16.6,
+      "diem_2025": null
+    },
+    {
+      "id": 62,
+      "ten_truong": "THPT Nguyễn Văn Thìn",
+      "vi_do": 10.316209,
+      "kinh_do": 106.716374,
+      "diem_2026": 8.15,
+      "diem_2025": null
+    },
+    {
+      "id": 63,
+      "ten_truong": "THPT Nguyễn Văn Tiếp",
+      "vi_do": 10.316209,
+      "kinh_do": 106.716374,
+      "diem_2026": 11.6,
+      "diem_2025": null
+    },
+    {
+      "id": 64,
+      "ten_truong": "THPT Tân Phước",
+      "vi_do": 10.478353,
+      "kinh_do": 106.1958573,
+      "diem_2026": 12.1,
+      "diem_2025": null
+    },
+    {
+      "id": 65,
+      "ten_truong": "THPT Trương Định",
+      "vi_do": 10.363818,
+      "kinh_do": 106.676149,
+      "diem_2026": 18.8,
+      "diem_2025": null
+    },
+    {
+      "id": 66,
+      "ten_truong": "THPT Bình Đông",
+      "vi_do": 10.4365534,
+      "kinh_do": 106.6571751,
+      "diem_2026": 13.65,
+      "diem_2025": null
+    },
+    {
+      "id": 67,
+      "ten_truong": "THPT Gò Công",
+      "vi_do": 10.397448,
+      "kinh_do": 106.716135,
+      "diem_2026": 11.8,
+      "diem_2025": null
+    },
+    {
+      "id": 68,
+      "ten_truong": "GDTX (Đồng tháp -cơ sở 1)",
+      "vi_do": 10.4593126,
+      "kinh_do": 105.6379454,
+      "diem_2026": 1.1,
+      "diem_2025": null
+    },
+    {
+      "id": 69,
+      "ten_truong": "GDTX (tp Cao Lãnh)",
+      "vi_do": 10.4576573,
+      "kinh_do": 105.635198,
+      "diem_2026": 1.1,
+      "diem_2025": null
+    }
+  ],
+  "Dong Thap Chuyen": {
+    "Toan": [
+      {
+        "id": 1,
+        "ten_truong": "THPT Chuyên Nguyễn Quang Diêu",
+        "vi_do": 10.470415,
+        "kinh_do": 105.626503,
+        "diem_2026": 39.25,
+        "diem_2025": 36.0
+      },
+      {
+        "id": 2,
+        "ten_truong": "THPT chuyên Nguyễn Đình Chiểu",
+        "vi_do": 10.283126,
+        "kinh_do": 105.772583,
+        "diem_2026": 36.95,
+        "diem_2025": 36.0
+      },
+      {
+        "id": 3,
+        "ten_truong": "Trường THPT chuyên Tiền Giang",
+        "vi_do": 10.355152,
+        "kinh_do": 106.331564,
+        "diem_2026": 40.7,
+        "diem_2025": null
+      }
+    ],
+    "Ly": [
+      {
+        "id": 1,
+        "ten_truong": "THPT Chuyên Nguyễn Quang Diêu",
+        "vi_do": 10.470415,
+        "kinh_do": 105.626503,
+        "diem_2026": 38.35,
+        "diem_2025": 29.25
+      },
+      {
+        "id": 2,
+        "ten_truong": "THPT chuyên Nguyễn Đình Chiểu",
+        "vi_do": 10.283126,
+        "kinh_do": 105.772583,
+        "diem_2026": 31.3,
+        "diem_2025": 29.25
+      },
+      {
+        "id": 3,
+        "ten_truong": "Trường THPT chuyên Tiền Giang",
+        "vi_do": 10.355152,
+        "kinh_do": 106.331564,
+        "diem_2026": 39.65,
+        "diem_2025": null
+      }
+    ],
+    "Hoa": [
+      {
+        "id": 1,
+        "ten_truong": "THPT Chuyên Nguyễn Quang Diêu",
+        "vi_do": 10.470415,
+        "kinh_do": 105.626503,
+        "diem_2026": 39.35,
+        "diem_2025": 34.0
+      },
+      {
+        "id": 2,
+        "ten_truong": "THPT chuyên Nguyễn Đình Chiểu",
+        "vi_do": 10.283126,
+        "kinh_do": 105.772583,
+        "diem_2026": 36.2,
+        "diem_2025": 29.25
+      },
+      {
+        "id": 3,
+        "ten_truong": "Trường THPT chuyên Tiền Giang",
+        "vi_do": 10.355152,
+        "kinh_do": 106.331564,
+        "diem_2026": 35.2,
+        "diem_2025": null
+      }
+    ]
+  }
+}

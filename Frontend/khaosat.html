@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.css" />
+  <title>EduMate</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style2.css" />
+</head>
+
+<body>
+  <header id="header">
+    <div id="header-inner">
+      <section class="right">
+        <a href="index.html" id="logo">
+          <img src="img/logo.webp" alt="Logo" />
+          <span>Edu<span id="logo-span">Mate</span></span>
+        </a>
+      </section>
+    </div>
+  </header>
+  <div id="survey">
+    <form id="input-survey">
+      <label for="survey-1-math">Nhập điểm toán lớp 8 của bạn:</label><br>
+      <input type="number" id="survey-1-math" placeholder="Nhập điểm toán..." required><br>
+
+      <label for="survey-2-literature">Nhập điểm văn lớp 8 của bạn:</label><br>
+      <input type="number" id="survey-2-literature" placeholder="Nhập điểm văn..." required><br>
+
+      <input type="checkbox" id="survey-3-specialized_high_school">
+      <label for="survey-3-specialized_high_school">Bạn có nhu cầu thi chuyên không?</label><br>
+
+      <!-- Chỉ hiện khi tick thi chuyên -->
+      <div id="chuyen-section" hidden>
+        <label for="mon-chuyen">Môn chuyên đăng ký:</label>
+        <select id="mon-chuyen" name="mon_chuyen">
+          <option value="">-- Chọn môn chuyên --</option>
+          <option value="toan">Chuyên Toán</option>
+          <!-- <option value="tin">Chuyên Tin</option>-->
+          <!-- <option value="anh">Chuyên Tiếng Anh</option>-->
+          <option value="ly">Chuyên Vật Lý</option>
+          <option value="hoa">Chuyên Hóa Học</option>
+          <!-- <option value="van">Chuyên Ngữ Văn</option>-->
+        </select>
+        <br>
+
+        <!-- Chỉ hiện khi đã chọn môn -->
+        <div id="diem-chuyen-wrap" hidden>
+          <label for="diem-chuyen" id="diem-chuyen-label"></label><br>
+          <input type="number" id="diem-chuyen" placeholder="Nhập điểm...">
+          <br>
+        </div>
+      </div>
+
+      <input type="checkbox" id="survey-4-live-independently">
+      <label for="survey-4-live-independently">Bạn có thể sống xa nhà không?</label><br>
+
+      <button type="submit">Nộp</button>
+      <button type="reset"> Xóa tất cả</button>
+    </form>
+  </div>
+
+  <script src="khaosat.js"></script>
+  <script src="script.js"></script>
+  <script>
+  
+  </script>
+</body>
+
+</html>

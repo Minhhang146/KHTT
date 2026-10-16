@@ -1,0 +1,9 @@
+{
+  "ly_thuyet": "<p>Phương trình bậc nhất hai ẩn có dạng ax + by = c</p>",
+  "cau_hoi": [
+    { "id": "1.1", "do_kho": 1, "type": "trac-nghiem",
+      "de_bai": "Phương trình nào là bậc nhất hai ẩn?",
+      "dap_an": ["x² + y = 1", "2x + y = 5", "x + 1 = 0", "xy = 3"],
+      "goi_y": "Chỉ có x và y, mỗi ẩn mũ 1" }
+  ]
+}

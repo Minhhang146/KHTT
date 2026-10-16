@@ -1,0 +1,550 @@
+:root {
+  --nen: #ffffff;
+  --chu: #1b2a41;
+  --nhat: #5b6b82;
+  --nhan: #2457d6;
+  --vien: #dfe5eeea;
+
+  /* Màu bổ sung cho Podium & Bảng xếp hạng */
+  --top1-vang: #f59e0b;
+  --top2-bac: #94a3b8;
+  --top3-dong: #d97706;
+  --avatar-purple: #8b5cf6;
+}
+
+/* Reset cơ bản & Font chữ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body { 
+  background-color: #f8fafc;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--chu); 
+  line-height: 1.6;
+  padding: 0; /* Đổi từ 20px thành 0 để header ép sát mép trên */
+}
+
+/* Container chính */
+.container {
+  max-width: 900px;
+  margin: 20px auto 40px; /* Thêm margin-top 20px nhẹ nhàng cách header */
+  background: var(--nen);
+  padding: 30px 40px; /* Giảm padding trên dưới từ 40px xuống 30px */
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Header / Hero section */
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  color: var(--nhan);
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  color: var(--nhat);
+  font-size: 1.1rem;
+}
+
+/* Tiêu đề chung các phần */
+.section-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 30px 0 20px;
+  color: var(--chu);
+}
+
+/* --- TỐI ƯU 3 CỘT "LÝ DO CHỌN EDUMATE" --- */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.feature-card {
+  background: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: 12px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(36, 87, 214, 0.08);
+  border-color: var(--nhan);
+}
+
+.feature-card h2 {
+  font-size: 1.2rem;
+  color: var(--nhan);
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: var(--nhat);
+  font-size: 0.95rem;
+}
+
+/* Khối Thống kê */
+.stats-section {
+  background-color: #f0f4fc;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.stats-section p {
+  color: var(--chu);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.stats-note {
+  color: var(--nhat) !important;
+  font-weight: normal !important;
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+/* Khối Thông điệp */
+.message-section {
+  border-left: 4px solid var(--nhan);
+  padding: 15px 20px;
+  background-color: #f8fafc;
+  border-radius: 0 8px 8px 0;
+}
+
+.message-section h1 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.message-section p {
+  color: var(--nhat);
+}
+
+a {
+  text-decoration: none; /* Bỏ gạch chân */
+  color: inherit;        /* Thừa hưởng màu chữ của phần tử cha */
+}
+
+/* Header & Navbar */
+header {
+  border-bottom: 1px solid #e5e5e5;
+  width: 100%;
+}
+
+#header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#logo img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+#logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#logo-span { 
+  color: var(--nhan); 
+}
+
+.subject-selection {
+  text-align: center;
+  padding: 20px;
+}
+
+.subject-selection h1 {
+  font-size: 1.5rem;
+  color: var(--chu);
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--nen);
+  color: var(--nhan);
+  border: 1px solid var(--nhan);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--nhan);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+#input-register,
+#input-login {
+  width: 100%;
+  max-width: 380px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Class dùng chung để ẩn phần tử */
+.hidden {
+  display: none !important;
+}
+
+/* Căn chỉnh cụm tài khoản */
+.user-account-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.auth-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Giao diện khi đăng nhập xong */
+#user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.streak-box {
+  background-color: #fff3e0;
+  color: #ff6d00;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.username {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#nav { display: flex; gap: 8px; list-style: none; }
+
+#nav a {
+  display: block; padding: 8px 14px; border-radius: 6px;
+  color: var(--nhat); text-decoration: none; font-weight: 500;
+  transition: background .15s, color .15s;
+}
+#nav a:hover { background: #eef2fb; color: var(--nhan); }
+#nav a.active { color: var(--nhan); background: #eef2fb; }
+#nav a:focus-visible, #menu-btn:focus-visible {
+  outline: 2px solid var(--nhan); outline-offset: 2px;
+}
+
+#menu-btn {
+  display: none; background: none; border: 1px solid var(--vien);
+  border-radius: 6px; padding: 6px 10px; font-size: 1.2rem;
+  cursor: pointer; color: var(--chu);
+}
+
+/* --- TRANG CÁC BÀI TẬP (PROBLEMS) --- */
+.problem-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Thanh công cụ trên cùng */
+.problem-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.problem-toolbar .title {
+  margin: 0;
+  font-size: 24px;
+  color: var(--chu);
+}
+
+.search-place {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 250px;
+}
+
+/* Layout chia cột giữa Bảng và Sidebar */
+.main-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Bảng chiếm 75% chiều ngang */
+.table-section {
+  flex: 0 0 75%; 
+}
+
+/* Ô vuông Chương bài học */
+.chapter-sidebar {
+  flex: 1;
+  background-color: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.chapter-sidebar h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: var(--chu);
+  border-bottom: 2px solid var(--nhan);
+  padding-bottom: 8px;
+}
+
+/* Định dạng Bảng & Cho cột Bài nhỏ lại */
+.problem-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.problem-table thead tr {
+  background-color: var(--nhan);
+}
+
+.problem-table th {
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.problem-table td {
+  padding: 10px 12px;
+  border: 1px solid var(--vien);
+  color: var(--chu);
+}
+
+.problem-table th:nth-child(1),
+.problem-table td:nth-child(1) { 
+  width: 15%; 
+}
+
+.problem-table th:nth-child(2),
+.problem-table td:nth-child(2) { 
+  width: 55%; 
+}
+
+.problem-table th:nth-child(3),
+.problem-table td:nth-child(3) { 
+  width: 30%; 
+  text-align: right; 
+}
+
+#problem-list tr:hover {
+  background-color: #f8fafc;
+}
+
+.chapter-sidebar p.active {
+  font-weight: bold;
+  color: #007bff;
+  background-color: #e9ecef;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   BẢNG XẾP HẠNG (RANKING / LEADERBOARD)
+   ========================================================= */
+
+.leaderboard-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- BỤC TUYÊN DƯƠNG (PODIUM) --- */
+.podium-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.podium-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Avatar hình tròn màu tím trên bục */
+.podium-card .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--avatar-purple);
+  border: 3px solid var(--nen);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+/* Cột bục */
+.podium-card .step {
+  width: 100px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 26px;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Cột Top 3 - Đồng */
+.podium-card.bronze .step {
+  height: 90px;
+  background-color: var(--top3-dong);
+}
+
+/* Cột Top 1 - Vàng (Cao nhất) */
+.podium-card.gold .step {
+  height: 150px;
+  background-color: var(--top1-vang);
+}
+
+/* Cột Top 2 - Bạc */
+.podium-card.silver .step {
+  height: 115px;
+  background-color: var(--top2-bac);
+}
+
+/* --- BẢNG NGƯỜI DÙNG (TABLE SECTION) --- */
+.leaderboard-container .table-section {
+  width: 100%;
+  flex: none;
+  background-color: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th {
+  background-color: rgba(36, 87, 214, 0.08);
+  color: var(--chu);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--vien);
+}
+
+.user-table td {
+  padding: 14px 16px;
+  color: var(--chu);
+  border-bottom: 1px solid var(--vien);
+  font-size: 15px;
+}
+
+.user-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.user-table tbody tr:hover {
+  background-color: rgba(36, 87, 214, 0.04);
+}
+
+/* Cột Điểm làm nổi bật bằng màu nhấn */
+.user-table td:last-child {
+  font-weight: 700;
+  color: var(--nhan);
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 640px) {
+  #menu-btn { display: block; }
+  #nav {
+    display: none; position: absolute; top: 64px; left: 0; right: 0;
+    flex-direction: column; gap: 0; padding: 8px 20px 12px;
+    background: var(--nen); border-bottom: 1px solid var(--vien);
+  }
+  #nav.open { display: flex; }
+
+  .podium-card .step {
+    width: 80px;
+  }
+  .podium-card .avatar {
+    width: 56px;
+    height: 56px;
+  }
+}
+
