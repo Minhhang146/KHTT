@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from db_ops import add_user, get_all_users, update_user, delete_user
 import sqlite3
-from db_ops import add_user, get_all_users, update_user, delete_user, update_streak
 from datetime import date, timedelta
+from db_ops import add_user, get_all_users, update_user, delete_user
+from db_ops import add_user, get_all_users, update_user, delete_user, update_streak
 from db_ops import add_user, get_all_users, update_user, delete_user, update_streak, update_user_score
-
+from db_ops import get_ranking
 
 
 app = Flask(__name__)
@@ -116,5 +116,7 @@ def add_score():
     conn.close()
     return jsonify({"success": True, "streak": row[0]}), 200
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+# 7. API bảng xếp hạng
+@app.route('/api/ranking', methods=['GET'])
+def ranking():
+    return jsonify({"success": True, "data": get_ranking()}), 200

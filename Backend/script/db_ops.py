@@ -98,3 +98,17 @@ def update_streak(user_id):
 
     conn.close()
 
+# 7. Lấy bảng xếp hạng: điểm cao nhất đứng trên cùng
+def get_ranking(limit=50):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    # ORDER BY score DESC = sắp xếp điểm từ cao xuống thấp
+    # LIMIT = chỉ lấy 50 người đầu cho nhẹ
+    cursor.execute(
+        "SELECT id, username, bio, score FROM users ORDER BY score DESC LIMIT ?",
+        (limit,)
+    )
+    rows = [dict(r) for r in cursor.fetchall()]
+    conn.close()
+    return rows
