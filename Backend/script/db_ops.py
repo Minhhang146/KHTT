@@ -13,11 +13,11 @@ def add_user(username, email, mk, bio=""):
             VALUES (?, ?, ?, ?)
         ''', (username, email, mk, bio))
         conn.commit()
-        return True   # thêm được: báo "OK" cho nơi gọi hàm
+        return cursor.lastrowid   # trả về id của user vừa tạo (thay vì True)
     except sqlite3.IntegrityError:
-        return False  # email đã có người dùng: báo "không được"
+        return None               # email đã có người dùng: trả về None
     finally:
-        conn.close()  # lúc nào cũng đóng kết nối
+        conn.close()
 
 # 2. Xem tất cả tài khoản (Read)
 def get_all_users():

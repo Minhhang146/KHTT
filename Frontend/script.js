@@ -52,13 +52,15 @@ async function handleLoginSubmit(event) {
     });
     const data = await response.json();
 
-    if (data.success) {
+        if (data.success) {
+      // Lưu thông tin để đăng ký xong là coi như đã đăng nhập luôn
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("username", data.user.username);
-      localStorage.setItem("userId", data.user.id); // để cộng điểm / lưu môn chuyên
-      localStorage.setItem("streak", data.user.streak); // để hiện 🔥
-      localStorage.setItem("monChuyen", data.user.mon_chuyen || ""); // môn chuyên đã lưu
-      window.location.href = "index.html";
+      localStorage.setItem("userId", data.user.id);
+      localStorage.setItem("streak", data.user.streak);
+      localStorage.setItem("monChuyen", "");
+
+      window.location.href = "khaosat.html"; // nhảy sang trang khảo sát
     } else {
       alert(data.message);
     }

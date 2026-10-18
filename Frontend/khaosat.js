@@ -144,8 +144,12 @@
     }
   }
 
-  // Bấm vào 1 thẻ trường = chọn trường đó
+  // Bấm vào 1 thẻ trường = chọn trường đó, lưu xong thì về trang chủ
   async function chonMotTruong(card, out) {
+    // tránh bấm nhiều lần khi đang lưu / đang chuyển trang
+    if (out.dataset.dangLuu === "1") return;
+    out.dataset.dangLuu = "1";
+
     out
       .querySelectorAll(".truong-card")
       .forEach((c) => c.classList.toggle("da-chon", c === card));
@@ -158,14 +162,20 @@
 
     tb.hidden = false;
     tb.textContent = "Đang lưu lựa chọn...";
+    tb.scrollIntoView({ behavior: "smooth", block: "center" });
 
     const kq = await luuMonChuyen(monChuyenHienTai);
     if (kq === "server")
-      tb.textContent = `Đã chọn ${ten}.${mon} Đã lưu vào tài khoản của bạn.`;
+      tb.textContent = `Đã chọn ${ten}.${mon} Đã lưu vào tài khoản. Đang về trang chủ...`;
     else if (kq === "local")
-      tb.textContent = `Đã chọn ${ten}.${mon} Hãy đăng nhập để lưu vào tài khoản.`;
+      tb.textContent = `Đã chọn ${ten}.${mon} Hãy đăng nhập để lưu vào tài khoản. Đang về trang chủ...`;
     else
-      tb.textContent = `Đã chọn ${ten}.${mon} Nhưng chưa lưu được lên server, bạn đã chạy app.py chưa?`;
+      tb.textContent = `Đã chọn ${ten}.${mon} Nhưng chưa lưu được lên server. Đang về trang chủ...`;
+
+    // chờ 1,5 giây cho người dùng đọc thông báo rồi chuyển trang
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
   }
 
   function ganChonTruong(out) {
@@ -421,9 +431,10 @@
     if (the.length) {
       html += `<h2 class="ketqua-tieu-de">Gợi ý trường dành cho bạn</h2>
                <p class="chon-goi-y">Bấm vào trường bạn muốn chọn.</p>
-               <div class="truong-grid">${the.join("")}</div>
-               <p id="chon-thong-bao" class="thong-bao" hidden></p>`;
+               <p id="chon-thong-bao" class="thong-bao" hidden></p>
+               <div class="truong-grid">${the.join("")}</div>`;
     }
+    out.dataset.dangLuu = "0";
     out.innerHTML =
       html || `<p class="thong-bao">Không tìm được trường phù hợp.</p>`;
     ganXuLyAnh(out);

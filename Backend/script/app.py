@@ -26,9 +26,14 @@ def register():
         return jsonify({"success": False, "message": "Vui lòng nhập đầy đủ thông tin!"}), 400
 
     try:
-        # add_user trả về True hoặc False, ta dựa vào đó để trả lời
-        if add_user(username, email, mk, bio):
-            return jsonify({"success": True, "message": "Đăng ký thành công!"}), 201
+        # add_user giờ trả về id (số) nếu thành công, None nếu email trùng
+        new_id = add_user(username, email, mk, bio)
+        if new_id:
+            return jsonify({
+                "success": True,
+                "message": "Đăng ký thành công!",
+                "user": {"id": new_id, "username": username, "streak": 0, "mon_chuyen": ""}
+            }), 201
         return jsonify({"success": False, "message": "Email này đã được đăng ký!"}), 409
     except Exception as e:
         return jsonify({"success": False, "message": f"Lỗi: {str(e)}"}), 500
