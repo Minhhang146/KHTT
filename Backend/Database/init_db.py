@@ -25,6 +25,15 @@ def init_db():
     )
     ''')
 
+    # bảng nhớ bài nào user đã được cộng điểm, để mỗi bài chỉ cộng 1 lần
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS da_lam (
+        user_id INTEGER,
+        bai_key TEXT,
+        PRIMARY KEY (user_id, bai_key)
+    )
+    ''')
+
     # DB cũ chưa có cột mon_chuyen thì thêm vào (không mất dữ liệu)
     cursor.execute("PRAGMA table_info(users)")
     cac_cot = [c[1] for c in cursor.fetchall()]
