@@ -3,14 +3,28 @@ from flask_cors import CORS
 import sqlite3
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+import os, re, json
 from db_ops import (
     DB_PATH,  # lấy đường dẫn từ db_ops để cả 2 file dùng chung 1 chỗ
     add_user, get_all_users, update_user, delete_user,
     update_streak, update_user_score, get_ranking, update_mon_chuyen
 )
 
+
+
 app = Flask(__name__)
 CORS(app)  # Cho phép Frontend kết nối tới Backend
+
+# thư mục chứa đáp án, nằm ở Backend nên trình duyệt không đọc được
+THU_MUC_DAP_AN = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'DapAn')
+
+# chỉ cho chữ thường, số, gạch ngang, gạch dưới
+# để không ai gõ "../" đọc trộm file khác trên máy
+TEN_HOP_LE = re.compile(r'^[a-z0-9_-]+$')
+
+def cham(dap_an_dung, tra_loi):
+    # đổi cả hai về chữ thường rồi so: 1 -> "1", True -> "true", "Lão Hạc" -> "lão hạc"
+    return str(tra_loi).strip().lower() == str(dap_an_dung).strip().lower()
 
 # 1. API Đăng ký tài khoản (Create)
 @app.route('/api/register', methods=['POST'])
@@ -97,24 +111,79 @@ def remove_user(user_id):
     return jsonify({"success": True, "message": "Đã xóa tài khoản!"}), 200
 
 # 6. API cộng điểm sau khi nộp bài
-@app.route('/api/score', methods=['POST'])
-def add_score():
-    data = request.get_json()
-    user_id = data.get('user_id')
-    points = data.get('points', 0)
+# API nộp bài: server tự chấm, tự cộng điểm
+@app.route('/api/submit', methods=['POST'])
+def submit():
+    data = request.get_json(silent=True) or {}
+    user_id = data.get('user_id')                         # có thể là None nếu chưa đăng nhập
+    subject = str(data.get('subject', '')).replace('-', '_')   # ngu-van -> ngu_van
+    chapter = str(data.get('chapter', ''))
+    article = str(data.get('article', ''))
+    bai_id = str(data.get('bai_id', ''))
+    answers = data.get('answers')
 
-    # thiếu thông tin hoặc điểm không hợp lệ thì báo lỗi
-    if not user_id or points <= 0:
+    # kiểm tra dữ liệu gửi lên có hợp lệ không
+    ok = (TEN_HOP_LE.match(subject) and TEN_HOP_LE.match(chapter)
+          and TEN_HOP_LE.match(article) and re.match(r'^[0-9.]+$', bai_id)
+          and isinstance(answers, dict))
+    if not ok:
         return jsonify({"success": False, "message": "Dữ liệu không hợp lệ!"}), 400
 
-    update_user_score(user_id, points)  # cộng điểm vào tài khoản
-    update_streak(user_id)              # tính lại chuỗi ngày học
+    # mở file đáp án của bài học
+    duong_dan = os.path.join(THU_MUC_DAP_AN, subject, chapter, article + '.json')
+    if not os.path.isfile(duong_dan):
+        return jsonify({"success": False, "message": "Không tìm thấy đáp án bài này!"}), 404
+    with open(duong_dan, encoding='utf-8') as f:
+        dap_an_bai = json.load(f).get(bai_id)
+    if not dap_an_bai:
+        return jsonify({"success": False, "message": "Không tìm thấy đáp án bài này!"}), 404
 
-    # lấy streak mới để trả về cho trình duyệt hiện 🔥
-    conn = sqlite3.connect(DB_PATH)
-    row = conn.execute("SELECT streak FROM users WHERE id = ?", (user_id,)).fetchone()
-    conn.close()
-    return jsonify({"success": True, "streak": row[0]}), 200
+    # chấm từng câu
+    ket_qua = {}
+    diem_dat = 0
+    diem_toi_da = 0
+    for cau_id, info in dap_an_bai.items():
+        diem = info.get('diem', 10)
+        diem_toi_da += diem
+        tra_loi = answers.get(cau_id)
+
+        if tra_loi is None or str(tra_loi).strip() == '':
+            # bỏ trống thì không tính điểm
+            ket_qua[cau_id] = {"dung": None, "diem": diem}
+            continue
+
+        dung = cham(info['dap_an_dung'], tra_loi)
+        if dung:
+            diem_dat += diem
+        # lời giải chỉ gửi về SAU khi đã nộp
+        ket_qua[cau_id] = {"dung": dung, "diem": diem, "loi_giai": info.get('loi_giai', '')}
+
+    # lưu điểm (chỉ khi đã đăng nhập và có điểm)
+    da_luu = False
+    streak = None
+    if user_id and diem_dat > 0:
+        conn = sqlite3.connect(DB_PATH)
+        cur = conn.cursor()
+        co_user = cur.execute("SELECT 1 FROM users WHERE id = ?", (user_id,)).fetchone()
+        if co_user:
+            # INSERT OR IGNORE: bài này làm rồi thì không thêm được nữa -> rowcount = 0
+            bai_key = f"{subject}/{chapter}/{article}/{bai_id}"
+            cur.execute("INSERT OR IGNORE INTO da_lam (user_id, bai_key) VALUES (?, ?)",
+                        (user_id, bai_key))
+            da_luu = (cur.rowcount == 1)
+        conn.commit()
+        conn.close()
+
+        if co_user:
+            if da_luu:
+                update_user_score(user_id, diem_dat)   # lần đầu mới được cộng điểm
+            update_streak(user_id)                     # làm bài thì vẫn giữ chuỗi ngày
+            conn = sqlite3.connect(DB_PATH)
+            streak = conn.execute("SELECT streak FROM users WHERE id = ?", (user_id,)).fetchone()[0]
+            conn.close()
+
+    return jsonify({"success": True, "diem_dat": diem_dat, "diem_toi_da": diem_toi_da,
+                    "ket_qua": ket_qua, "da_luu": da_luu, "streak": streak}), 200
 
 # 7. API bảng xếp hạng
 @app.route('/api/ranking', methods=['GET'])

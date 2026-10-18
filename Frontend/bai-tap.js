@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Chỗ hiện kết quả sau khi nộp (đúng/sai + gợi ý + lời giải)
           cauHtml.insertAdjacentHTML("beforeend", `<div class="ket-qua-cau" style="margin-top:8px;"></div>`);
           khungBai.appendChild(cauHtml);
-          dsCau.push({ cau, card: cauHtml });
+          dsCau.push({ cau, card: cauHtml, baiId: bai.id }); // nhớ câu này thuộc bài nào
         });
 
         quizContainer.appendChild(khungBai);
