@@ -1,19 +1,19 @@
 :root {
-    --nen: #ffffff;
-    --chu: #1b2a41;
-    --nhat: #5b6b82;
-    --nhan: #2457d6;
-    --vien: #dfe5eeea;
+  --nen: #ffffff;
+  --chu: #1b2a41;
+  --nhat: #5b6b82;
+  --nhan: #2457d6;
+  --vien: #dfe5eeea;
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-    .truong-card,
-    .truong-img,
-    #input-survey button {
-        animation: none;
-        transition: none;
-    }
+  .truong-card,
+  .truong-img,
+  #input-survey button {
+    animation: none;
+    transition: none;
+  }
 }
 
 /* Khung lý thuyết */
@@ -66,21 +66,28 @@
 
 /* Lớp nền đen phủ toàn màn hình, các phần ngoài ô bị che tối */
 .modal-nen {
-  position: fixed;          /* cố định, không trôi khi cuộn */
-  inset: 0;                 /* phủ kín 4 cạnh màn hình */
-  background: rgba(0, 0, 0, 0.75); /* đen, hơi trong suốt */
+  position: fixed;
+  /* cố định, không trôi khi cuộn */
+  inset: 0;
+  /* phủ kín 4 cạnh màn hình */
+  background: rgba(0, 0, 0, 0.75);
+  /* đen, hơi trong suốt */
   display: flex;
-  align-items: center;      /* căn ô ra giữa theo chiều dọc */
-  justify-content: center;  /* căn ô ra giữa theo chiều ngang */
+  align-items: center;
+  /* căn ô ra giữa theo chiều dọc */
+  justify-content: center;
+  /* căn ô ra giữa theo chiều ngang */
   padding: 16px;
-  z-index: 1000;            /* nằm trên mọi thứ khác */
+  z-index: 1000;
+  /* nằm trên mọi thứ khác */
 }
 
 /* Ô chữ nhật chứa lý thuyết */
 .modal-hop {
   width: 100%;
   max-width: 700px;
-  max-height: 85vh;         /* cao tối đa 85% màn hình */
+  max-height: 85vh;
+  /* cao tối đa 85% màn hình */
   display: flex;
   flex-direction: column;
   background: var(--nen);
@@ -130,29 +137,8 @@
   padding: 20px 24px;
   background: var(--nen);
   border: 1px solid var(--vien);
-  border-left: 4px solid var(--nhan); /* vạch xanh bên trái cho nổi */
-  border-radius: 12px;
-}
-
-.tac-pham-box .tac-gia {
-  color: var(--nhat);
-  font-style: italic;
-  margin-bottom: 10px;
-}
-
-/* Giãn dòng rộng để đọc thơ, văn cho dễ */
-.tac-pham-noi-dung {
-  line-height: 1.9;
-}
-
-/* Khung hiện tác phẩm trong bài đọc hiểu */
-.tac-pham-box {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px 24px;
-  background: var(--nen);
-  border: 1px solid var(--vien);
-  border-left: 4px solid var(--nhan); /* vạch xanh bên trái cho nổi */
+  border-left: 4px solid var(--nhan);
+  /* vạch xanh bên trái cho nổi */
   border-radius: 12px;
 }
 
@@ -177,4 +163,160 @@
 .bai-tap-tieu-de {
   color: var(--nhan);
   margin-bottom: 12px;
+}
+
+/* ===== Chọn môn học ===== */
+.subject-page {
+  min-height: calc(100vh - 53px);
+  padding: 56px 16px 80px;
+  background: linear-gradient(180deg, #f4f7fc 0, var(--nen) 420px);
+}
+
+.subject-head {
+  text-align: center;
+}
+
+.subject-head i {
+  font-size: 40px;
+  color: var(--nhan);
+}
+
+.subject-page .subject-head h1 {
+  margin: 12px 0 6px;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  color: var(--chu);
+}
+
+.subject-head p {
+  color: var(--nhat);
+}
+
+/* 2 ô hoặc 3 ô đều tự căn giữa */
+.subject-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  max-width: 1000px;
+  margin: 44px auto 0;
+}
+
+.subject-card {
+  position: relative;
+  flex: 0 1 290px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 30px 20px 26px;
+  background: var(--nen);
+  border: 1px solid var(--vien);
+  border-radius: 22px;
+  box-shadow: 0 1px 2px rgba(27, 42, 65, 0.06), 0 10px 30px rgba(27, 42, 65, 0.08);
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.subject-card:hover,
+.subject-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--nhan);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(36, 87, 214, 0.12), 0 18px 40px rgba(36, 87, 214, 0.18);
+}
+
+/* Ô nạp hình đại diện môn */
+.subject-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #e8eefc;
+}
+
+.subject-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.subject-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 54px;
+  color: var(--nhan);
+  background: repeating-linear-gradient(135deg, #e8eefc 0 14px, #f2f5fc 14px 28px);
+  border: 1.5px dashed #c9d3e4;
+  border-radius: 18px;
+}
+
+.subject-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--chu);
+  transition: color 0.25s;
+}
+
+.subject-card:hover .subject-name,
+.subject-card:focus-visible .subject-name {
+  color: var(--nhan);
+}
+
+/* Môn chưa có bài */
+.subject-card--soon {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.subject-card--soon:hover {
+  transform: none;
+  border-color: var(--vien);
+  box-shadow: 0 1px 2px rgba(27, 42, 65, 0.06), 0 10px 30px rgba(27, 42, 65, 0.08);
+}
+
+.subject-card--soon:hover .subject-name {
+  color: var(--chu);
+}
+
+.subject-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--nhat);
+  background: #f4f7fc;
+  border: 1px solid var(--vien);
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .subject-card {
+    flex: 1 1 100%;
+    max-width: 360px;
+  }
+}
+
+/* ===== Chọn trường ở trang khảo sát ===== */
+.truong-card {
+  cursor: pointer;
+}
+
+.truong-card.da-chon {
+  box-shadow: 0 0 0 3px var(--c), 0 18px 40px rgba(27, 42, 65, 0.18);
+}
+
+.chon-goi-y {
+  margin: -10px 0 18px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--nhat);
+}
+
+#chon-thong-bao {
+  margin-top: 22px;
 }

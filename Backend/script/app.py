@@ -2,11 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
 from datetime import date, timedelta
-from db_ops import add_user, get_all_users, update_user, delete_user
-from db_ops import add_user, get_all_users, update_user, delete_user, update_streak
-from db_ops import add_user, get_all_users, update_user, delete_user, update_streak, update_user_score
-from db_ops import get_ranking
-
+from db_ops import (
+    add_user, get_all_users, update_user, delete_user,
+    update_streak, update_user_score, get_ranking, update_mon_chuyen
+)
 
 app = Flask(__name__)
 CORS(app)  # Cho phép Frontend kết nối tới Backend
@@ -17,7 +16,7 @@ DB_PATH = 'Backend/Database/edumate.db'
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
-    
+
     username = data.get('username')
     email = data.get('email')
     mk = data.get('mk')
@@ -25,7 +24,7 @@ def register():
 
     if not username or not email or not mk:
         return jsonify({"success": False, "message": "Vui lòng nhập đầy đủ thông tin!"}), 400
-    
+
     try:
         # add_user trả về True hoặc False, ta dựa vào đó để trả lời
         if add_user(username, email, mk, bio):
@@ -45,12 +44,15 @@ def login():
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    # tìm user theo email và mật khẩu
-    cursor.execute("SELECT id, username, email, bio FROM users WHERE email = ? AND mk = ?", (email, mk))
+    # tìm user theo email và mật khẩu (lấy luôn môn chuyên đã lưu)
+    cursor.execute(
+        "SELECT id, username, email, bio, mon_chuyen FROM users WHERE email = ? AND mk = ?",
+        (email, mk)
+    )
     user = cursor.fetchone()
     conn.close()
 
-    # trường hợp 1: sai email hoặc mật khẩu -> báo lỗi rồi dừng luôn
+    # sai email hoặc mật khẩu -> báo lỗi rồi dừng luôn
     if not user:
         return jsonify({"success": False, "message": "Sai email hoặc mật khẩu!"}), 401
 
@@ -71,7 +73,6 @@ def login():
     info = dict(user)
     info['streak'] = streak_hien_thi
 
-    # hàm nào cũng phải có return ở cuối, không thì sẽ bị lỗi như vừa rồi
     return jsonify({"success": True, "message": "Đăng nhập thành công!", "user": info}), 200
 
 # 3. API Lấy danh sách tất cả user (Read)
@@ -121,7 +122,17 @@ def add_score():
 def ranking():
     return jsonify({"success": True, "data": get_ranking()}), 200
 
+# 8. API lưu môn chuyên
+@app.route('/api/users/<int:user_id>/mon-chuyen', methods=['PUT'])
+def save_mon_chuyen(user_id):
+    data = request.get_json()
+    mon = data.get('mon_chuyen', '')
+
+    if mon not in ('', 'toan', 'ly', 'hoa'):
+        return jsonify({"success": False, "message": "Môn chuyên không hợp lệ!"}), 400
+
+    update_mon_chuyen(user_id, mon)
+    return jsonify({"success": True, "message": "Đã lưu môn chuyên!"}), 200
+
 if __name__ == '__main__':
-    # debug=True: có lỗi thì hiện chi tiết, sửa code xong server tự khởi động lại
-    # port=5000: khớp với địa chỉ http://127.0.0.1:5000 mà script.js đang gọi
-    app.run(debug=True, port=5000)
+    app.run(debug=True)

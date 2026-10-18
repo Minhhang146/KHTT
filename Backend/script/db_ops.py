@@ -64,7 +64,7 @@ def update_user_score(user_id, points):
     conn.close()
     print(f"Đã cộng thêm {points} điểm cho user ID {user_id}!")
 
-# 6. Sửa steak người dùng theo ID và ngày dùng cuối cùng
+# 6. Sửa streak người dùng theo ID và ngày dùng cuối cùng
 def update_streak(user_id):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -80,7 +80,7 @@ def update_streak(user_id):
 
         if last_date == today:
             conn.close()
-            return  # today đã reser chx
+            return  # hôm nay đã tính rồi
 
         yesterday = str(date.today() - timedelta(days=1))
 
@@ -112,3 +112,11 @@ def get_ranking(limit=50):
     rows = [dict(r) for r in cursor.fetchall()]
     conn.close()
     return rows
+
+# 8. Lưu môn chuyên của người dùng ('' = không thi chuyên)
+def update_mon_chuyen(user_id, mon):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE users SET mon_chuyen = ? WHERE id = ?", (mon, user_id))
+    conn.commit()
+    conn.close()

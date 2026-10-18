@@ -3,9 +3,11 @@
   let viTri = { lat: null, lng: null };
   let truong = [];
   let truongChuyenData = {};
+  let monChuyenHienTai = ""; // "", "toan", "ly" hoặc "hoa"
 
   // value của <select> -> key trong JSON
   const KEY_MON = { toan: "Toan", ly: "Ly", hoa: "Hoa" };
+  const TEN_MON = { toan: "Toán", ly: "Vật Lý", hoa: "Hóa Học" };
 
   // Ảnh: trường thường = <id>.webp, trường chuyên = chuyen_<id>.webp
   // Đường dẫn tính từ file HTML (HTML nằm trong Frontend/, ảnh ở Frontend/img/school/)
@@ -120,6 +122,64 @@
     return ` ${so} Thấp hơn khá nhiều, rất khó.`;
   }
 
+  // ---------- Lưu môn chuyên ----------
+  // Luôn lưu trên trình duyệt; có đăng nhập thì lưu cả lên server
+  async function luuMonChuyen(mon) {
+    localStorage.setItem("monChuyen", mon);
+    const userId = localStorage.getItem("userId");
+    if (!userId) return "local";
+    try {
+      const res = await fetch(
+        `http://127.0.0.1:5000/api/users/${userId}/mon-chuyen`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mon_chuyen: mon }),
+        },
+      );
+      const kq = await res.json();
+      return kq.success ? "server" : "loi";
+    } catch (err) {
+      return "loi";
+    }
+  }
+
+  // Bấm vào 1 thẻ trường = chọn trường đó
+  async function chonMotTruong(card, out) {
+    out
+      .querySelectorAll(".truong-card")
+      .forEach((c) => c.classList.toggle("da-chon", c === card));
+
+    const tb = $("chon-thong-bao");
+    const ten = card.querySelector("h3").textContent;
+    const mon = monChuyenHienTai
+      ? ` Môn chuyên: ${TEN_MON[monChuyenHienTai]}.`
+      : "";
+
+    tb.hidden = false;
+    tb.textContent = "Đang lưu lựa chọn...";
+
+    const kq = await luuMonChuyen(monChuyenHienTai);
+    if (kq === "server")
+      tb.textContent = `Đã chọn ${ten}.${mon} Đã lưu vào tài khoản của bạn.`;
+    else if (kq === "local")
+      tb.textContent = `Đã chọn ${ten}.${mon} Hãy đăng nhập để lưu vào tài khoản.`;
+    else
+      tb.textContent = `Đã chọn ${ten}.${mon} Nhưng chưa lưu được lên server, bạn đã chạy app.py chưa?`;
+  }
+
+  function ganChonTruong(out) {
+    out.querySelectorAll(".truong-card").forEach((card) => {
+      card.addEventListener("click", () => chonMotTruong(card, out));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          chonMotTruong(card, out);
+        }
+      });
+    });
+  }
+
   // ---------- Chuẩn bị giao diện bằng JS ----------
   function chuanBiGiaoDien() {
     const form = $("input-survey");
@@ -225,6 +285,9 @@
       monChuyen: $("mon-chuyen").value,
       diemChuyen: Number($("diem-chuyen").value),
     };
+
+    // nhớ môn chuyên để lát bấm chọn trường thì lưu
+    monChuyenHienTai = hs.thiChuyen ? hs.monChuyen : "";
 
     const hopLeDiem = (x) => Number.isFinite(x) && x >= 0 && x <= 10;
     if (!hopLeDiem(hs.toan) || !hopLeDiem(hs.van)) {
@@ -357,11 +420,14 @@
       html += `<p class="thong-bao">Chưa tìm được trường chuyên. Hãy chọn môn chuyên.</p>`;
     if (the.length) {
       html += `<h2 class="ketqua-tieu-de">Gợi ý trường dành cho bạn</h2>
-               <div class="truong-grid">${the.join("")}</div>`;
+               <p class="chon-goi-y">Bấm vào trường bạn muốn chọn.</p>
+               <div class="truong-grid">${the.join("")}</div>
+               <p id="chon-thong-bao" class="thong-bao" hidden></p>`;
     }
     out.innerHTML =
       html || `<p class="thong-bao">Không tìm được trường phù hợp.</p>`;
     ganXuLyAnh(out);
+    ganChonTruong(out);
     out.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
