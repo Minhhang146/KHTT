@@ -120,3 +120,8 @@ def add_score():
 @app.route('/api/ranking', methods=['GET'])
 def ranking():
     return jsonify({"success": True, "data": get_ranking()}), 200
+
+if __name__ == '__main__':
+    # debug=True: có lỗi thì hiện chi tiết, sửa code xong server tự khởi động lại
+    # port=5000: khớp với địa chỉ http://127.0.0.1:5000 mà script.js đang gọi
+    app.run(debug=True, port=5000)
