@@ -1,7 +1,10 @@
+import os
 import sqlite3
 from datetime import date, timedelta
 
-DB_PATH = 'Backend/Database/edumate.db'
+# __file__ là vị trí file db_ops.py, từ đó đi lùi ra rồi vào thư mục Database
+# nên chạy lệnh ở thư mục nào cũng tìm đúng file edumate.db
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Database', 'edumate.db')
 
 # 1. Thêm tài khoản mới (Create)
 def add_user(username, email, mk, bio=""):

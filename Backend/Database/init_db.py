@@ -1,12 +1,13 @@
 import sqlite3
 import os
 
-def init_db():
-    # Đảm bảo thư mục Database tồn tại
-    os.makedirs('Backend/Database', exist_ok=True)
+# File này nằm ngay trong thư mục Database nên lấy luôn thư mục của nó
+THU_MUC = os.path.dirname(os.path.abspath(__file__))
+DB_FILE = os.path.join(THU_MUC, 'edumate.db')
 
-    # Kết nối tới file database edumate.db
-    conn = sqlite3.connect('Backend/Database/edumate.db')
+def init_db():
+    # Thư mục này chắc chắn tồn tại vì file đang nằm trong đó
+    conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
 
     # Tạo bảng users

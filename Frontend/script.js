@@ -58,7 +58,9 @@ async function handleLoginSubmit(event) {
       localStorage.setItem("username", data.user.username);
       localStorage.setItem("userId", data.user.id);
       localStorage.setItem("streak", data.user.streak);
-      localStorage.setItem("monChuyen", "");
+      // Giữ môn chuyên mà server đã lưu, không ghi đè bằng chuỗi rỗng
+      // (|| "" để nếu server trả về null thì vẫn là chuỗi rỗng, không bị lỗi)
+      localStorage.setItem("monChuyen", data.user.mon_chuyen || "");
 
       window.location.href = "khaosat.html"; // nhảy sang trang khảo sát
     } else {

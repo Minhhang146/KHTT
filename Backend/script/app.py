@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
 from datetime import date, timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
 from db_ops import (
+    DB_PATH,  # lấy đường dẫn từ db_ops để cả 2 file dùng chung 1 chỗ
     add_user, get_all_users, update_user, delete_user,
     update_streak, update_user_score, get_ranking, update_mon_chuyen
 )
@@ -10,24 +12,26 @@ from db_ops import (
 app = Flask(__name__)
 CORS(app)  # Cho phép Frontend kết nối tới Backend
 
-DB_PATH = 'Backend/Database/edumate.db'
-
 # 1. API Đăng ký tài khoản (Create)
 @app.route('/api/register', methods=['POST'])
 def register():
-    data = request.get_json()
-
-    username = data.get('username')
-    email = data.get('email')
-    mk = data.get('mk')
+    data = request.get_json(silent=True) or {}         # không có dữ liệu thì thành {}, không bị sập
+    username = (data.get('username') or '').strip()    # cắt dấu cách thừa hai đầu
+    email = (data.get('email') or '').strip().lower()  # đổi hết về chữ thường
+    mk = data.get('mk') or ''
     bio = data.get('bio', '')
 
+    # kiểm tra từng thứ một, sai thì báo luôn
     if not username or not email or not mk:
         return jsonify({"success": False, "message": "Vui lòng nhập đầy đủ thông tin!"}), 400
+    if len(mk) < 6:
+        return jsonify({"success": False, "message": "Mật khẩu cần ít nhất 6 ký tự!"}), 400
+    if len(username) > 30:
+        return jsonify({"success": False, "message": "Username tối đa 30 ký tự!"}), 400
 
     try:
-        # add_user giờ trả về id (số) nếu thành công, None nếu email trùng
-        new_id = add_user(username, email, mk, bio)
+        # lưu mật khẩu đã xáo trộn, không lưu chữ thật
+        new_id = add_user(username, email, generate_password_hash(mk), bio)
         if new_id:
             return jsonify({
                 "success": True,
@@ -41,43 +45,33 @@ def register():
 # 2. API Đăng nhập (Read)
 @app.route('/api/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    email = data.get('email')
-    mk = data.get('mk')
+    data = request.get_json(silent=True) or {}
+    email = (data.get('email') or '').strip().lower()  # đổi chữ thường giống lúc đăng ký
+    mk = data.get('mk') or ''
 
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-
-    # tìm user theo email và mật khẩu (lấy luôn môn chuyên đã lưu)
-    cursor.execute(
-        "SELECT id, username, email, bio, mon_chuyen FROM users WHERE email = ? AND mk = ?",
-        (email, mk)
-    )
-    user = cursor.fetchone()
-    conn.close()
-
-    # sai email hoặc mật khẩu -> báo lỗi rồi dừng luôn
-    if not user:
-        return jsonify({"success": False, "message": "Sai email hoặc mật khẩu!"}), 401
-
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+    # tìm theo email thôi, chưa so mật khẩu ở đây
     row = conn.execute(
-        "SELECT streak, last_active_date FROM users WHERE id = ?", (user['id'],)
+        "SELECT id, username, email, bio, mon_chuyen, mk, streak, last_active_date "
+        "FROM users WHERE email = ?", (email,)
     ).fetchone()
     conn.close()
 
+    # không có email, hoặc mật khẩu không khớp -> báo sai (gộp chung để người lạ không đoán được email nào tồn tại)
+    if not row or not check_password_hash(row['mk'], mk):
+        return jsonify({"success": False, "message": "Sai email hoặc mật khẩu!"}), 401
+
     hom_nay = str(date.today())
     hom_qua = str(date.today() - timedelta(days=1))
-
-    # chỉ giữ streak nếu lần làm bài gần nhất là hôm nay hoặc hôm qua
-    # nếu bỏ lỡ từ 2 ngày trở lên thì hiện 0 (chuỗi đã đứt)
+    # bỏ lỡ từ 2 ngày trở lên thì chuỗi đứt, hiện 0
     streak_hien_thi = row['streak'] if row['last_active_date'] in (hom_nay, hom_qua) else 0
 
-    info = dict(user)
-    info['streak'] = streak_hien_thi
-
+    # chỉ gửi thứ cần thiết, KHÔNG gửi mật khẩu về trình duyệt
+    info = {
+        "id": row['id'], "username": row['username'], "email": row['email'],
+        "bio": row['bio'], "mon_chuyen": row['mon_chuyen'], "streak": streak_hien_thi
+    }
     return jsonify({"success": True, "message": "Đăng nhập thành công!", "user": info}), 200
 
 # 3. API Lấy danh sách tất cả user (Read)
