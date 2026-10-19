@@ -14,7 +14,7 @@
       "id_chuong": "chuong-2",
       "ten_chuong": "Chương 2: Phương Trình Và Bất Phương Trình Bậc Nhất Một Ẩn",
       "danh_sach_bai": [
-        { "id": "01", "ten_bai": "Phương tình quy về phương trình bậc nhất một ẩn", "diem": 100 },
+        { "id": "01", "ten_bai": "Phương trình quy về phương trình bậc nhất một ẩn", "diem": 100 },
         { "id": "02", "ten_bai": "Bất đẳng thức và tính chất", "diem": 100 },
         { "id": "03", "ten_bai": "Bất phương trình bậc nhất một ẩn", "diem": 100 }
       ]
@@ -60,10 +60,10 @@
     },
     {
       "id_chuong": "chuong-7",
-      "ten_chuong": "Chương 7: Tần Số Tương Đối Và Tần Số Tương Đối",
+      "ten_chuong": "Chương 7: Tần Số Và Tần Số Tương Đối",
       "danh_sach_bai": [
         { "id": "01", "ten_bai": "Bảng tần số và biểu đồ tần số", "diem": 100 },
-        { "id": "02", "ten_bai": "Bảng tần số tương đối và biểu đồ tần số tường đối", "diem": 100 },
+        { "id": "02", "ten_bai": "Bảng tần số tương đối và biểu đồ tần số tương đối", "diem": 100 },
         { "id": "03", "ten_bai": "Bảng tần số, tần số tương đối ghép nhóm và biểu đồ", "diem": 100 }
       ]
     },
