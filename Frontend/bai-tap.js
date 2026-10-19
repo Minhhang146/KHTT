@@ -215,71 +215,74 @@ document.addEventListener("DOMContentLoaded", async () => {
       quizContainer.appendChild(btnNop);
       quizContainer.appendChild(tongKet);
 
-      // ----- Bấm Nộp bài -----
+      // ----- Bấm Nộp bài: gửi câu trả lời lên server, server chấm -----
       btnNop.addEventListener("click", async () => {
+        btnNop.disabled = true; // khoá nút, tránh bấm nhiều lần
+        const userId = localStorage.getItem("userId");
         let diemDat = 0;
         let diemToiDa = 0;
+        let daLuu = false;
 
-        dsCau.forEach(({ cau, card }) => {
-          const o = card.querySelector(".ket-qua-cau");
-          diemToiDa += diemCua(cau);
+        // gom các câu theo bài, mỗi bài gửi lên server 1 lần
+        const theoBai = {};
+        dsCau.forEach((x) => (theoBai[x.baiId] ||= []).push(x));
 
-          // Lấy câu trả lời người dùng đã chọn / nhập
-          let traLoi = null;
-          if (cau.type === "tra-loi-ngan") {
-            traLoi = card.querySelector("input[type=text]").value.trim();
-          } else {
-            const chon = card.querySelector("input[type=radio]:checked");
-            traLoi = chon ? chon.value : null;
-          }
+        try {
+          for (const baiId of Object.keys(theoBai)) {
+            // lấy câu trả lời người dùng đã chọn / nhập
+            const answers = {};
+            theoBai[baiId].forEach(({ cau, card }) => {
+              if (cau.type === "tra-loi-ngan") {
+                answers[cau.id] = card.querySelector("input[type=text]").value.trim();
+              } else {
+                const chon = card.querySelector("input[type=radio]:checked");
+                answers[cau.id] = chon ? chon.value : "";
+              }
+            });
 
-          // Chưa trả lời thì báo luôn, không tính điểm
-          if (traLoi === null || traLoi === "") {
-            o.innerHTML = `<span style="color:#d97706;">Bạn chưa trả lời câu này.</span>`;
-            return;
-          }
-
-          // So với đáp án đúng (cách đổi kiểu dữ liệu để so cho khớp)
-          let dung = false;
-          if (cau.type === "trac-nghiem") dung = Number(traLoi) === cau.dap_an_dung;
-          if (cau.type === "dung-sai") dung = (traLoi === "true") === cau.dap_an_dung;
-          if (cau.type === "tra-loi-ngan") {
-            dung = traLoi.toLowerCase() === String(cau.dap_an_dung).toLowerCase();
-          }
-
-          if (dung) diemDat += diemCua(cau);
-
-          // Hiện đúng/sai, sai thì hiện gợi ý, luôn hiện lời giải
-          o.innerHTML = dung
-            ? `<span style="color:#16a34a;">✔ Đúng! +${diemCua(cau)} điểm</span>`
-            : `<span style="color:#dc2626;">✘ Chưa đúng. ${cau.goi_y ? "Gợi ý: " + cau.goi_y : ""}</span>`;
-          if (cau.loi_giai) o.innerHTML += `<p style="color:#5b6b82;">Lời giải: ${cau.loi_giai}</p>`;
-        });
-
-        tongKet.textContent = `Điểm của bạn: ${diemDat} / ${diemToiDa}`;
-        btnNop.disabled = true; // nộp rồi thì khoá nút, tránh bấm nhiều lần để cộng điểm
-
-        // Gửi điểm lên server (chỉ khi đã đăng nhập và có điểm)
-        const userId = localStorage.getItem("userId");
-        if (userId && diemDat > 0) {
-          try {
-            const res = await fetch("http://127.0.0.1:5000/api/score", {
+            const res = await fetch("http://127.0.0.1:5000/api/submit", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ user_id: Number(userId), points: diemDat }),
+              body: JSON.stringify({
+                user_id: userId ? Number(userId) : null,
+                subject, chapter, article, bai_id: baiId, answers,
+              }),
             });
             const kq = await res.json();
-            if (kq.success) {
-              // Cập nhật streak (chuỗi ngày) trên thanh trên cùng
+            if (!kq.success) throw new Error(kq.message);
+
+            diemDat += kq.diem_dat;
+            diemToiDa += kq.diem_toi_da;
+            if (kq.da_luu) daLuu = true;
+
+            // cập nhật streak trên thanh trên cùng
+            if (kq.streak !== null) {
               localStorage.setItem("streak", kq.streak);
               const streakEl = document.querySelector(".streak-box span");
               if (streakEl) streakEl.textContent = kq.streak;
             }
-          } catch (err) {
-            console.error("Không gửi được điểm:", err);
+
+            // hiện kết quả từng câu: đúng/sai, sai thì kèm gợi ý, luôn kèm lời giải
+            theoBai[baiId].forEach(({ cau, card }) => {
+              const o = card.querySelector(".ket-qua-cau");
+              const r = kq.ket_qua[cau.id];
+              if (!r || r.dung === null) {
+                o.innerHTML = `<span style="color:#d97706;">Bạn chưa trả lời câu này.</span>`;
+                return;
+              }
+              o.innerHTML = r.dung
+                ? `<span style="color:#16a34a;">✔ Đúng! +${r.diem} điểm</span>`
+                : `<span style="color:#dc2626;">✘ Chưa đúng. ${cau.goi_y ? "Gợi ý: " + cau.goi_y : ""}</span>`;
+              if (r.loi_giai) o.innerHTML += `<p style="color:#5b6b82;">Lời giải: ${r.loi_giai}</p>`;
+            });
           }
-        } else if (!userId) {
-          tongKet.textContent += " (Đăng nhập để điểm được lưu nhé!)";
+
+          tongKet.textContent = `Điểm của bạn: ${diemDat} / ${diemToiDa}`;
+          if (!userId) tongKet.textContent += " (Đăng nhập để điểm được lưu nhé!)";
+          else if (diemDat > 0 && !daLuu) tongKet.textContent += " (Bài này bạn đã được cộng điểm trước đó)";
+        } catch (err) {
+          btnNop.disabled = false; // lỗi thì cho nộp lại
+          tongKet.textContent = "Không nộp được bài: " + err.message;
         }
       });
     } catch (error) {
