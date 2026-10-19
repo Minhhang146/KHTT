@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)  # Cho phép Frontend kết nối tới Backend
 
 # thư mục chứa đáp án, nằm ở Backend nên trình duyệt không đọc được
-THU_MUC_DAP_AN = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'DapAn')
+THU_MUC_DAP_AN = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Dap_an')
 
 # chỉ cho chữ thường, số, gạch ngang, gạch dưới
 # để không ai gõ "../" đọc trộm file khác trên máy
