@@ -88,27 +88,28 @@ def login():
     }
     return jsonify({"success": True, "message": "Đăng nhập thành công!", "user": info}), 200
 
+
 # 3. API Lấy danh sách tất cả user (Read)
-@app.route('/api/users', methods=['GET'])
-def list_users():
-    users = get_all_users()
-    return jsonify({"success": True, "data": users}), 200
+#@app.route('/api/users', methods=['GET'])
+#def list_users():
+#    users = get_all_users()
+#    return jsonify({"success": True, "data": users}), 200
 
 # 4. API Cập nhật thông tin user (Update)
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
-def update_profile(user_id):
-    data = request.get_json()
-    new_username = data.get('username')
-    new_bio = data.get('bio', '')
+#@app.route('/api/users/<int:user_id>', methods=['PUT'])
+#def update_profile(user_id):
+#    data = request.get_json()
+#    new_username = data.get('username')
+#    new_bio = data.get('bio', '')
 
-    update_user(user_id, new_username, new_bio)
-    return jsonify({"success": True, "message": "Cập nhật thành công!"}), 200
+#    update_user(user_id, new_username, new_bio)
+#    return jsonify({"success": True, "message": "Cập nhật thành công!"}), 200
 
 # 5. API Xóa user (Delete)
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
-def remove_user(user_id):
-    delete_user(user_id)
-    return jsonify({"success": True, "message": "Đã xóa tài khoản!"}), 200
+#@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+#def remove_user(user_id):
+#    delete_user(user_id)
+#    return jsonify({"success": True, "message": "Đã xóa tài khoản!"}), 200
 
 # 6. API cộng điểm sau khi nộp bài
 # API nộp bài: server tự chấm, tự cộng điểm
@@ -133,8 +134,12 @@ def submit():
     duong_dan = os.path.join(THU_MUC_DAP_AN, subject, chapter, article + '.json')
     if not os.path.isfile(duong_dan):
         return jsonify({"success": False, "message": "Không tìm thấy đáp án bài này!"}), 404
-    with open(duong_dan, encoding='utf-8') as f:
-        dap_an_bai = json.load(f).get(bai_id)
+        # file trống hoặc viết sai thì báo nhẹ nhàng, không để server sập
+    try:
+        with open(duong_dan, encoding='utf-8') as f:
+            dap_an_bai = json.load(f).get(bai_id)
+    except (ValueError, OSError):
+        return jsonify({"success": False, "message": "Bài này chưa có đáp án!"}), 404
     if not dap_an_bai:
         return jsonify({"success": False, "message": "Không tìm thấy đáp án bài này!"}), 404
 

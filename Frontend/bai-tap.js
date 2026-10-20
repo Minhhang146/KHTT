@@ -20,7 +20,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!response.ok) {
         throw new Error(`Không tìm thấy file JSON (HTTP ${response.status})`);
       }
-      const data = await response.json();
+
+       // file trống thì báo thân thiện
+      const text = await response.text();
+      if (!text.trim()) throw new Error("Bài này chưa có nội dung, bạn quay lại sau nhé!");
+      const data = JSON.parse(text);
 
       chapterSidebar.innerHTML = `<h3>Chương bài học</h3>`;
 
@@ -46,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
       console.error("Lỗi tải danh sách chương:", error);
       problemList.innerHTML = `<tr><td colspan="3">Lỗi: ${error.message}</td></tr>`;
+       quizContainer.insertAdjacentHTML("afterbegin", `<p>${error.message}</p>`);
     }
   }
 

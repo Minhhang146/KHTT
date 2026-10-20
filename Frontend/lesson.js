@@ -42,7 +42,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch(`./file_de/${folder}/${chapter}/${article}.json`);
     if (!res.ok) throw new Error("Không tìm thấy bài này.");
-    const data = await res.json();
+    
+    // đọc dạng chữ trước, file trống thì báo thân thiện thay vì lỗi JSON
+    const text = await res.text();
+    if (!text.trim()) throw new Error("Bài này chưa có nội dung, bạn quay lại sau nhé!");
+    const data = JSON.parse(text);
 
     // Phần 1: đổ lý thuyết từ JSON vào ô (không có thì báo chưa có)
     noiDung.innerHTML = data.ly_thuyet || "<p>Bài này chưa có lý thuyết.</p>";
