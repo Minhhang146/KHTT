@@ -100,7 +100,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       const response = await fetch(`./file_de/${subject}/${chapter}/${article}.json`);
       if (!response.ok) throw new Error("Không thể tải file nội dung bài học.");
 
-      const data = await response.json();
+      // file trống thì báo thân thiện
+      const text = await response.text();
+      if (!text.trim()) throw new Error("Bài này chưa có nội dung, bạn quay lại sau nhé!");
+      const data = JSON.parse(text);
       const tatCaBai = layDanhSachBai(data);
 
       // Địa chỉ có &q=1.1 thì chỉ giữ đúng bài đó, không có thì giữ hết
@@ -292,6 +295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     } catch (error) {
       console.error("Lỗi tải chi tiết bài tập:", error);
+      quizContainer.insertAdjacentHTML("afterbegin", `<p>${error.message}</p>`);
     }
   }
 });
