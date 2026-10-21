@@ -26,6 +26,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    // Điền 3 người đầu vào bục (người nào chưa có thì để trống)
+    [1, 2, 3].forEach((hang) => {
+      const u = kq.data[hang - 1]; // hạng 1 là phần tử số 0  cout << "hello world";
+      const the = document.getElementById(`podium-${hang}`);
+      if (!the) return;
+      // textContent để tên người dùng không chạy được code lạ
+      the.querySelector(".podium-name").textContent = u
+        ? `${u.username} (${u.score})`
+        : "";
+    });
+
+    //?? hello world 
+    
+
     // Mỗi người dùng = 1 dòng: ID, Bio, Username, Điểm
     kq.data.forEach((u) => {
       themDong([u.id, u.bio || "", u.username, u.score]);

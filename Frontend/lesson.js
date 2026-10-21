@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ----- Mở / đóng ô lý thuyết -----
   function moLyThuyet() {
-    nen.classList.remove("hidden");              // hiện nền đen + ô chữ nhật
+    nen.classList.remove("hidden");              // hiện nền đen + ô chữ nhật cout << "hello world";
     document.body.style.overflow = "hidden";     // khoá cuộn trang phía sau
   }
 
