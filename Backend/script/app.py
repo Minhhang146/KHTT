@@ -166,6 +166,8 @@ def submit():
     # lưu điểm (chỉ khi đã đăng nhập và có điểm)
     da_luu = False
     streak = None
+    diem_cong = 0   # điểm thật sự cộng vào tài khoản (đã nhân thưởng streak)
+    he_so = 1.0
     if user_id and diem_dat > 0:
         conn = sqlite3.connect(DB_PATH)
         cur = conn.cursor()
@@ -180,15 +182,18 @@ def submit():
         conn.close()
 
         if co_user:
-            if da_luu:
-                update_user_score(user_id, diem_dat)   # lần đầu mới được cộng điểm
-            update_streak(user_id)                     # làm bài thì vẫn giữ chuỗi ngày
+            update_streak(user_id)   # cập nhật chuỗi ngày TRƯỚC để biết streak hôm nay
             conn = sqlite3.connect(DB_PATH)
             streak = conn.execute("SELECT streak FROM users WHERE id = ?", (user_id,)).fetchone()[0]
             conn.close()
 
-    return jsonify({"success": True, "diem_dat": diem_dat, "diem_toi_da": diem_toi_da,
-                    "ket_qua": ket_qua, "da_luu": da_luu, "streak": streak}), 200
+            if da_luu:   # lần đầu làm bài này mới được cộng điểm
+                # cứ 3 ngày liên tiếp thưởng thêm 10%, tối đa 50%
+                he_so = 1 + min(streak // 3, 5) * 0.1
+                diem_cong = round(diem_dat * he_so)
+                update_user_score(user_id, diem_cong)
+
+    return jsonify({"success": True, "diem_dat": diem_dat, "diem_toi_da": diem_toi_da,"ket_qua": ket_qua, "da_luu": da_luu, "streak": streak,"diem_cong": diem_cong, "he_so": he_so}), 200
 
 # 7. API bảng xếp hạng
 @app.route('/api/ranking', methods=['GET'])

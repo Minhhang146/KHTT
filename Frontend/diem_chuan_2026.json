@@ -211,10 +211,10 @@
     {
       "id": 27,
       "ten_truong": "THPT Đốc Binh Kiều",
-      "vi_do": 10.407041,
-      "kinh_do": 106.126204,
-      "diem_2026": 8.0,
-      "diem_2025": 9.75
+      "vi_do": null,
+      "kinh_do": null,
+      "diem_2026": null,
+      "diem_2025": null
     },
     {
       "id": 28,
@@ -467,8 +467,8 @@
     {
       "id": 59,
       "ten_truong": "THPT Gò Công Đông",
-      "vi_do": 10.397448,
-      "kinh_do": 106.716135,
+      "vi_do": 10.396758,
+      "kinh_do": 106.7147098,
       "diem_2026": 15.45,
       "diem_2025": null
     },
@@ -499,8 +499,8 @@
     {
       "id": 63,
       "ten_truong": "THPT Nguyễn Văn Tiếp",
-      "vi_do": 10.316209,
-      "kinh_do": 106.716374,
+      "vi_do": 10.5266028,
+      "kinh_do": 106.3385798,
       "diem_2026": 11.6,
       "diem_2025": null
     },
@@ -531,8 +531,8 @@
     {
       "id": 67,
       "ten_truong": "THPT Gò Công",
-      "vi_do": 10.397448,
-      "kinh_do": 106.716135,
+      "vi_do": 10.3529238,
+      "kinh_do": 106.6795692,
       "diem_2026": 11.8,
       "diem_2025": null
     },

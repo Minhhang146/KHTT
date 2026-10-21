@@ -230,6 +230,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         let diemDat = 0;
         let diemToiDa = 0;
         let daLuu = false;
+        let diemCong = 0;// điểm thật sự được cộng (đã nhân thưởng streak)
+        let heSo = 1;
 
         // gom các câu theo bài, mỗi bài gửi lên server 1 lần
         const theoBai = {};
@@ -286,6 +288,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
 
           tongKet.textContent = `Điểm của bạn: ${diemDat} / ${diemToiDa}`;
+          // có thưởng streak thì báo cho người dùng thấy
+          if (daLuu && heSo > 1) {
+            tongKet.textContent += ` Thưởng chuỗi ngày ×${heSo.toFixed(1)}: +${diemCong} điểm lên bảng xếp hạng.`;
+          }
           if (!userId) tongKet.textContent += " (Đăng nhập để điểm được lưu nhé!)";
           else if (diemDat > 0 && !daLuu) tongKet.textContent += " (Bài này bạn đã được cộng điểm trước đó)";
         } catch (err) {
