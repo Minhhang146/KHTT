@@ -32,9 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const the = document.getElementById(`podium-${hang}`);
       if (!the) return;
       // textContent để tên người dùng không chạy được code lạ
-      the.querySelector(".podium-name").textContent = u
-        ? `${u.username} (${u.score})`
-        : "";
+      the.querySelector(".podium-name").textContent = u? `${u.username} - ${u.score}`: "";
     });
 
     //?? hello world 

@@ -480,6 +480,17 @@ header {
   background-color: var(--top2-bac);
 }
 
+/* Tên và điểm dưới avatar trên bục */
+.podium-card .podium-name {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--chu);
+  text-align: center;
+  max-width: 110px;
+  word-break: break-word;
+}
+
 /* --- BẢNG NGƯỜI DÙNG (TABLE SECTION) --- */
 .leaderboard-container .table-section {
   width: 100%;
