@@ -53,13 +53,29 @@
       </div>
     </header>
 
-    <div class="container">
-        <h2>Hồ sơ của bạn</h2>
-        <p>Tên: <b id="pf-username"></b></p>
-        <p>Giới thiệu: <span id="pf-bio"></span></p>
-        <p>Điểm: <b id="pf-score"></b></p>
-        <p>Chuỗi ngày: 🔥 <b id="pf-streak"></b></p>
-        <p>Môn chuyên: <span id="pf-chuyen"></span></p>
+    <!-- Giữ class "container" để đoạn báo lỗi trong profile.js vẫn chạy -->
+    <div class="container profile-card">
+        <!-- Avatar nằm giữa, to hơn trên thanh menu -->
+        <img id="pf-avatar" class="profile-avatar" src="img/avartar.webp" alt="Avatar" />
+
+        <h2 id="pf-username"></h2>
+        <p id="pf-bio" class="profile-bio"></p>
+
+        <!-- 3 ô thông số nằm ngang -->
+        <div class="profile-stats">
+            <div class="profile-stat">
+            <span class="stat-so" id="pf-score">0</span>
+            <span class="stat-nhan">Điểm</span>
+            </div>
+            <div class="profile-stat">
+            <span class="stat-so">🔥 <span id="pf-streak">0</span></span>
+            <span class="stat-nhan">Chuỗi ngày</span>
+            </div>
+            <div class="profile-stat">
+            <span class="stat-so stat-chu" id="pf-chuyen"></span>
+            <span class="stat-nhan">Môn chuyên</span>
+            </div>
+        </div>
     </div>
 
     <script src="profile.js"></script>

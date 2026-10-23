@@ -35,6 +35,12 @@ function showLoggedInUI() {
     const streakEl = document.querySelector(".streak-box span");
     if (streakEl) streakEl.textContent = localStorage.getItem("streak") || "0";
   }
+
+  // bấm vào avatar hoặc tên thì mở trang hồ sơ
+  document.querySelectorAll(".user-avatar, .username").forEach((el) => {
+  el.style.cursor = "pointer";
+  el.addEventListener("click", () => (window.location.href = "profile.html"));
+});
 }
 
 // 2. Xử lý Submit Đăng nhập (Kết nối Backend Flask)

@@ -7,7 +7,8 @@ import os, re, json
 from db_ops import (
     DB_PATH,  # lấy đường dẫn từ db_ops để cả 2 file dùng chung 1 chỗ
     add_user, get_all_users, update_user, delete_user,
-    update_streak, update_user_score, get_ranking, update_mon_chuyen
+    update_streak, update_user_score, get_ranking, update_mon_chuyen,
+    get_user
 )
 
 
