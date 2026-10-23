@@ -123,3 +123,14 @@ def update_mon_chuyen(user_id, mon):
     cursor.execute("UPDATE users SET mon_chuyen = ? WHERE id = ?", (mon, user_id))
     conn.commit()
     conn.close()
+
+# 9. Lấy thông tin 1 người dùng (KHÔNG lấy mật khẩu)
+def get_user(user_id):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    row = conn.execute(
+        "SELECT id, username, bio, score, streak, mon_chuyen FROM users WHERE id = ?",
+        (user_id,)
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None   # không có user thì trả None

@@ -212,5 +212,13 @@ def save_mon_chuyen(user_id):
     update_mon_chuyen(user_id, mon)
     return jsonify({"success": True, "message": "Đã lưu môn chuyên!"}), 200
 
+# 9. API xem hồ sơ
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def profile(user_id):
+    u = get_user(user_id)
+    if not u:
+        return jsonify({"success": False, "message": "Không tìm thấy người dùng!"}), 404
+    return jsonify({"success": True, "data": u}), 200
+
 if __name__ == '__main__':
     app.run(debug=True)
