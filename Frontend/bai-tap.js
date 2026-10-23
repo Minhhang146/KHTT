@@ -264,6 +264,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             diemDat += kq.diem_dat;
             diemToiDa += kq.diem_toi_da;
             if (kq.da_luu) daLuu = true;
+            diemCong += kq.diem_cong;
+            heSo = kq.he_so;
 
             // cập nhật streak trên thanh trên cùng
             if (kq.streak !== null) {
