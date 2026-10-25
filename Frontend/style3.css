@@ -67,19 +67,15 @@
 /* Lớp nền đen phủ toàn màn hình, các phần ngoài ô bị che tối */
 .modal-nen {
   position: fixed;
-  /* cố định, không trôi khi cuộn */
   inset: 0;
-  /* phủ kín 4 cạnh màn hình */
-  background: rgba(0, 0, 0, 0.75);
-  /* đen, hơi trong suốt */
+  background: rgba(0, 0, 0, 0.55);   /* giảm từ 0.75 để thấy nền mờ phía sau */
+  backdrop-filter: blur(6px);         /* làm mờ mọi thứ phía sau hộp */
+  -webkit-backdrop-filter: blur(6px); /* dành cho Safari */
   display: flex;
   align-items: center;
-  /* căn ô ra giữa theo chiều dọc */
   justify-content: center;
-  /* căn ô ra giữa theo chiều ngang */
   padding: 16px;
   z-index: 1000;
-  /* nằm trên mọi thứ khác */
 }
 
 /* Ô chữ nhật chứa lý thuyết */
@@ -401,4 +397,102 @@
 .stat-nhan {
   font-size: 0.85rem;
   color: var(--nhat);
+}
+
+/* ===== Form sửa hồ sơ ===== */
+.profile-form {
+  margin-top: 20px;
+  text-align: left;            /* chữ trong form căn trái cho dễ đọc */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-form label {
+  font-weight: 600;
+}
+
+.profile-form input,
+.profile-form textarea {
+  padding: 10px 12px;
+  font: inherit;
+  border: 1.5px solid var(--vien);
+  border-radius: 10px;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+  outline: none;
+  border-color: var(--nhan);
+}
+
+.profile-form-nut {
+  display: flex;
+  gap: 10px;
+}
+
+#sua-thong-bao {
+  min-height: 1.2em;           /* giữ chỗ để form không giật khi hiện chữ */
+  font-size: 0.9rem;
+}
+
+/* Hộp sửa hồ sơ nhỏ hơn hộp lý thuyết */
+.modal-hop.modal-nho {
+  max-width: 480px;
+}
+
+/* Form nằm trong hộp: bỏ khoảng cách cũ, thêm đệm cho đẹp */
+.modal-hop .profile-form {
+  margin-top: 0;
+  padding: 20px;
+  overflow-y: auto;   /* form dài quá thì cuộn bên trong hộp */
+}
+
+.profile-form textarea {
+  resize: vertical;   /* chỉ cho kéo giãn chiều cao */
+}
+
+/* ===== Nút bị khóa (chưa đủ điểm) ===== */
+.btn.btn-khoa {
+  position: relative;            /* để dòng chữ nổi bám theo nút */
+  background: #e5e7eb;           /* xám */
+  color: #9ca3af;
+  border-color: #d1d5db;
+  cursor: not-allowed;           /* con trỏ hình cấm */
+}
+
+/* rê chuột vào thì nút không đổi màu xanh, không nhích lên */
+.btn.btn-khoa:hover {
+  background: #e5e7eb;
+  color: #9ca3af;
+  transform: none;
+}
+
+/* dòng chữ nổi: lấy nội dung từ thuộc tính data-tip của nút */
+.btn-khoa::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);      /* nằm phía trên nút */
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;            /* rộng vừa chữ... */
+  max-width: 220px;              /* ...nhưng không quá 220px, dài hơn thì xuống dòng */
+  white-space: normal;           /* cho phép xuống dòng (trước đây là nowrap) */
+  text-align: center;
+  line-height: 1.4;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--chu);
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 10;                   /* nằm trên các phần khác */
+}
+
+/* rê chuột vào thì hiện */
+.btn-khoa:hover::after {
+  opacity: 1;
 }

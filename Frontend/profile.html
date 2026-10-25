@@ -78,6 +78,35 @@
         </div>
     </div>
 
+    <!-- Nút mở form sửa -->
+    <button type="button" id="btn-sua" class="btn" style="margin-top:24px;">✏️ Sửa hồ sơ</button>
+
+    <!-- Lớp nền mờ phủ toàn màn hình, bên trong là hộp chứa form -->
+    <div id="sua-nen" class="modal-nen hidden">
+        <div class="modal-hop modal-nho" role="dialog" aria-modal="true" aria-labelledby="sua-tieu-de">
+            <div class="modal-dau">
+            <h3 id="sua-tieu-de">Sửa hồ sơ</h3>
+            <button type="button" id="btn-dong-sua" class="modal-dong" aria-label="Đóng">✕</button>
+            </div>
+
+            <!-- Các id bên trong giữ nguyên như cũ -->
+            <form id="form-sua" class="profile-form">
+                <label for="in-username">Tên hiển thị:</label>
+                <input type="text" id="in-username" maxlength="30" required>
+
+                <label for="in-bio">Giới thiệu:</label>
+                <textarea id="in-bio" maxlength="150" rows="3"></textarea>
+
+                <p id="sua-thong-bao"></p>
+
+                <div class="profile-form-nut">
+                    <button type="submit" class="btn">Lưu</button>
+                    <button type="button" id="btn-huy" class="btn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="profile.js"></script>
     <script src="script.js"></script>
   </body>

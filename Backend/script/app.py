@@ -11,7 +11,7 @@ from db_ops import (
     get_user
 )
 
-
+DIEM_MO_KHOA_SUA = 500
 
 app = Flask(__name__)
 CORS(app)  # Cho phép Frontend kết nối tới Backend
@@ -220,6 +220,33 @@ def profile(user_id):
     if not u:
         return jsonify({"success": False, "message": "Không tìm thấy người dùng!"}), 404
     return jsonify({"success": True, "data": u}), 200
+
+# 10. API sửa tên và giới thiệu
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+def edit_profile(user_id):
+    data = request.get_json(silent=True) or {}
+    username = (data.get('username') or '').strip()
+    bio = (data.get('bio') or '').strip()
+
+    # lấy người dùng trước để biết họ có bao nhiêu điểm
+    u = get_user(user_id)
+    if not u:
+        return jsonify({"success": False, "message": "Không tìm thấy người dùng!"}), 404
+
+    # chưa đủ điểm thì từ chối, 403 = không được phép
+    if u['score'] < DIEM_MO_KHOA_SUA:
+        return jsonify({"success": False,
+                        "message": f"Bạn phải đủ {DIEM_MO_KHOA_SUA} điểm mới mở khóa tính năng này!"}), 403
+
+    if not username:
+        return jsonify({"success": False, "message": "Tên không được để trống!"}), 400
+    if len(username) > 30:
+        return jsonify({"success": False, "message": "Tên tối đa 30 ký tự!"}), 400
+    if len(bio) > 150:
+        return jsonify({"success": False, "message": "Giới thiệu tối đa 150 ký tự!"}), 400
+
+    update_user(user_id, username, bio)
+    return jsonify({"success": True, "username": username, "bio": bio}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
