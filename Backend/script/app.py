@@ -4,6 +4,7 @@ import sqlite3
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import os, re, json
+from datetime import datetime
 from db_ops import (
     DB_PATH,  # lấy đường dẫn từ db_ops để cả 2 file dùng chung 1 chỗ
     add_user, get_all_users, update_user, delete_user,
@@ -247,6 +248,85 @@ def edit_profile(user_id):
 
     update_user(user_id, username, bio)
     return jsonify({"success": True, "username": username, "bio": bio}), 200
+
+# Lấy danh sách cuộc thi, kèm trạng thái
+@app.route('/api/contests', methods=['GET'])
+def list_contests():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute("SELECT * FROM contests ORDER BY bat_dau DESC").fetchall()
+    conn.close()
+
+    bay_gio = datetime.now().strftime("%Y-%m-%d %H:%M")
+    ds = []
+    for r in rows:
+        c = dict(r)
+        # so sánh chuỗi ngày giờ là so được vì cùng định dạng
+        if bay_gio < c['bat_dau']:
+            c['trang_thai'] = "sap-dien-ra"
+        elif bay_gio <= c['ket_thuc']:
+            c['trang_thai'] = "dang-dien-ra"
+        else:
+            c['trang_thai'] = "da-ket-thuc"
+        ds.append(c)
+    return jsonify({"success": True, "data": ds}), 200
+
+
+# Nộp bài cuộc thi: server tự kiểm tra giờ và chấm
+@app.route('/api/contests/<int:cid>/submit', methods=['POST'])
+def contest_submit(cid):
+    data = request.get_json(silent=True) or {}
+    user_id = data.get('user_id')
+    answers = data.get('answers') or {}
+    if not user_id:
+        return jsonify({"success": False, "message": "Hãy đăng nhập để thi!"}), 401
+
+    conn = sqlite3.connect(DB_PATH)
+    cs = conn.execute("SELECT bat_dau, ket_thuc FROM contests WHERE id = ?", (cid,)).fetchone()
+    if not cs:
+        conn.close()
+        return jsonify({"success": False, "message": "Không có cuộc thi này!"}), 404
+
+    # Kiểm tra giờ ở SERVER (không tin trình duyệt, vì học sinh có thể sửa giờ máy)
+    bay_gio = datetime.now().strftime("%Y-%m-%d %H:%M")
+    if not (cs[0] <= bay_gio <= cs[1]):
+        conn.close()
+        return jsonify({"success": False, "message": "Cuộc thi không trong giờ làm bài!"}), 403
+
+    # Đọc đáp án rồi chấm bằng hàm cham() có sẵn
+    duong_dan = os.path.join(THU_MUC_DAP_AN, 'contest', f'{cid}.json')
+    with open(duong_dan, encoding='utf-8') as f:
+        dap_an = json.load(f)
+
+    diem = 0
+    for cau_id, info in dap_an.items():
+        if cham(info['dap_an_dung'], answers.get(cau_id, '')):
+            diem += info.get('diem', 10)
+
+    # INSERT OR IGNORE: nộp lần 2 sẽ bị bỏ qua (rowcount = 0)
+    cur = conn.execute("INSERT OR IGNORE INTO contest_ket_qua VALUES (?, ?, ?)",
+                       (user_id, cid, diem))
+    da_luu = (cur.rowcount == 1)
+    conn.commit()
+    conn.close()
+
+    if not da_luu:
+        return jsonify({"success": False, "message": "Bạn đã nộp bài này rồi!"}), 409
+    return jsonify({"success": True, "diem": diem}), 200
+
+
+# Bảng xếp hạng riêng của 1 cuộc thi
+@app.route('/api/contests/<int:cid>/ranking', methods=['GET'])
+def contest_ranking(cid):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute('''
+        SELECT u.username, k.diem FROM contest_ket_qua k
+        JOIN users u ON u.id = k.user_id
+        WHERE k.contest_id = ? ORDER BY k.diem DESC LIMIT 50
+    ''', (cid,)).fetchall()
+    conn.close()
+    return jsonify({"success": True, "data": [dict(r) for r in rows]}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

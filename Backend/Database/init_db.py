@@ -34,6 +34,27 @@ def init_db():
     )
     ''')
 
+    # Bảng ghi các cuộc thi (admin thêm vào)
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS contests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ten TEXT NOT NULL,
+        bat_dau TEXT NOT NULL,   -- vd: 2026-11-01 19:00
+        ket_thuc TEXT NOT NULL   -- vd: 2026-11-01 20:00
+    )
+    ''')
+
+    # Bảng ghi ai đã thi và được bao nhiêu điểm
+    # PRIMARY KEY (user_id, contest_id) = mỗi người chỉ nộp 1 lần
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS contest_ket_qua (
+        user_id INTEGER,
+        contest_id INTEGER,
+        diem INTEGER,
+        PRIMARY KEY (user_id, contest_id)
+    )
+    ''')
+
     # DB cũ chưa có cột mon_chuyen thì thêm vào (không mất dữ liệu)
     cursor.execute("PRAGMA table_info(users)")
     cac_cot = [c[1] for c in cursor.fetchall()]
