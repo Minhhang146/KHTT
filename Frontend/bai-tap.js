@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
       console.error("Lỗi tải danh sách chương:", error);
       problemList.innerHTML = `<tr><td colspan="3">Lỗi: ${error.message}</td></tr>`;
-       quizContainer.insertAdjacentHTML("afterbegin", `<p>${error.message}</p>`);
     }
   }
 

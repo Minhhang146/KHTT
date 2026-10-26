@@ -129,8 +129,18 @@ def get_user(user_id):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     row = conn.execute(
-        "SELECT id, username, bio, score, streak, mon_chuyen FROM users WHERE id = ?",
-        (user_id,)
+        "SELECT id, username, bio, score, streak, mon_chuyen, last_active_date "
+        "FROM users WHERE id = ?", (user_id,)
     ).fetchone()
     conn.close()
-    return dict(row) if row else None   # không có user thì trả None
+    if not row:
+        return None
+
+    u = dict(row)
+    hom_nay = str(date.today())
+    hom_qua = str(date.today() - timedelta(days=1))
+    # bỏ lỡ từ 2 ngày trở lên thì chuỗi đứt, hiện 0 (giống lúc đăng nhập)
+    if u['last_active_date'] not in (hom_nay, hom_qua):
+        u['streak'] = 0
+    u.pop('last_active_date')   # không cần gửi ngày này ra ngoài
+    return u
