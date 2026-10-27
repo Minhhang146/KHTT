@@ -45,6 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     // Server chưa bật hoặc bị lỗi mạng
     tbody.innerHTML = "";
-    themDong(["", "Không kết nối được server. Bật app.py!!!", "", ""]);
+    themDong(["", "Không kết nối được server. Dm m bật app.py !!!", "", ""]);
   }
 });

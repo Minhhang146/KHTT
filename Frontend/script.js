@@ -74,7 +74,7 @@ async function handleLoginSubmit(event) {
     }
   } catch (error) {
     alert(
-      "Không thể kết nối tới server Python! Hãy kiểm tra lại xem app.py đã chạy chưa.",
+      "Không kết nối được server. Dm m bật app.py !!!",
     );
   }
 }
