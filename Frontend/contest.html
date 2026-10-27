@@ -79,6 +79,23 @@
       </table>
     </div>
 
+    <!-- Ô cuộc thi: ẩn sẵn, bấm vào 1 dòng trong bảng thì contest.js mới hiện ra -->
+    <div id="contest-nen" class="modal-nen hidden">
+      <div class="modal-hop contest-hop" role="dialog" aria-modal="true">
+        <!-- Hàng trên cùng: 3 tab nằm bên trái, nút đóng bên phải -->
+        <div class="modal-dau">
+          <div class="contest-tabs">
+            <button type="button" class="contest-tab active" data-tab="thong-tin">Thông tin</button>
+            <button type="button" class="contest-tab" data-tab="bai-tap">Bài tập</button>
+            <button type="button" class="contest-tab" data-tab="xep-hang">Bảng xếp hạng</button>
+          </div>
+          <button type="button" id="btn-dong-contest" class="modal-dong" aria-label="Đóng">✕</button>
+        </div>
+        <!-- Nội dung của tab đang chọn được đổ vào đây -->
+        <div id="contest-noi-dung" class="contest-noi-dung"></div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
     <script src="contest.js"></script>
   </body>

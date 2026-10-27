@@ -129,6 +129,83 @@
   color: var(--nhat);
 }
 
+/* ---------- Dòng trong bảng bấm được ---------- */
+.contest-table tbody tr.co-the-bam {
+  cursor: pointer;
+}
+.contest-table tbody tr.co-the-bam:focus-visible {
+  outline: 2px solid var(--nhan);
+  outline-offset: -2px;
+}
+
+/* ---------- Ô cuộc thi (dùng lại .modal-nen và .modal-hop của style3.css) ---------- */
+.contest-hop {
+  max-width: 800px;
+  height: 560px;        /* giữ chiều cao cố định để đổi tab ô không nhảy lên xuống */
+  max-height: 90vh;
+}
+
+/* Hàng tab nằm góc trên bên trái */
+.contest-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.contest-tab {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--nhat);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.contest-tab:hover {
+  color: var(--nhan);
+  background: #eaf0ff;
+}
+/* Tab đang chọn: nền xanh, chữ trắng */
+.contest-tab.active {
+  color: #fff;
+  background: var(--nhan);
+}
+
+/* Phần nội dung: dài quá thì cuộn bên trong ô */
+.contest-noi-dung {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+/* Tab Thông tin */
+.contest-ten {
+  display: inline;
+  font-size: 1.4rem;
+  color: var(--chu);
+}
+.contest-noi-dung .contest-badge {
+  margin: 0 0 0 10px;
+}
+.contest-noi-dung p {
+  margin: 10px 0;
+}
+.contest-noi-dung h4 {
+  margin: 20px 0 6px;
+  color: var(--nhan);
+}
+.contest-noidung-text {
+  white-space: pre-line; /* admin xuống dòng thì hiện xuống dòng */
+  line-height: 1.8;
+}
+
+/* Bảng xếp hạng trong ô: bỏ khoảng cách thừa của trang xếp hạng */
+.contest-noi-dung .leaderboard-container {
+  margin: 0 auto;
+}
+
 /* ---------- Điện thoại ---------- */
 @media (max-width: 640px) {
   .contest-table th,
