@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.css" />
+    <title>EduMate - Học tập cá nhân hoá</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="personal.css" />
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+</head>
+
+<body>
+    <header id="header">
+        <div id="header-inner">
+            <section class="right">
+                <a href="index.html" id="logo">
+                    <img src="img/logo.webp" alt="Logo" />
+                    <span>Edu<span id="logo-span">Mate</span></span>
+                </a>
+            </section>
+            <button id="menu-btn" aria-label="Mở menu" aria-expanded="false">☰</button>
+            <ul id="nav" class="center">
+                <li id="nav-gioi-thieu"><a href="personal.html" id="link-gioi-thieu" class="active">Học tập cá nhân
+                        hoá</a></li>
+                <li id="nav-bai-tap"><a href="subjects.html" id="link-bai-tap">Bài tập</a></li>
+                <li id="nav-cuoc-thi"><a href="contest.html" id="link-cuoc-thi">Cuộc thi</a></li>
+                <li id="nav-xep-hang"><a href="ranking.html" id="link-xep-hang">Xếp hạng</a></li>
+            </ul>
+            <div class="user-account-area">
+                <div id="auth-buttons">
+                    <a href="login.html" class="auth-link">Đăng nhập</a>
+                    <a href="register.html" class="auth-link">Đăng ký</a>
+                </div>
+                <div id="user-profile" class="hidden">
+                    <div class="streak-box">🔥 <span>0</span></div>
+                    <span class="username">Username</span>
+                    <img src="img/avartar.webp" alt="Avatar" class="user-avatar" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="hoctap">
+        <h1>Học tập cá nhân hoá</h1>
+        <div class="tab-chinh">
+            <button id="tab-lich" class="on">Lịch học</button>
+            <button id="tab-setup">Thiết lập</button>
+        </div>
+
+        <!-- ===== Lịch học ===== -->
+        <section id="pn-lich">
+            <div class="hang">
+                <h2 id="hom-nay"></h2>
+                <button id="btn-xep" class="btn">Xếp lại từ bây giờ</button>
+            </div>
+            <div id="tabs-ngay" class="tabs-ngay"></div>
+            <ul id="lich-ngay" class="lich"></ul>
+            <div id="canhbao"></div>
+        </section>
+
+        <!-- ===== Thiết lập ===== -->
+        <section id="pn-setup" hidden>
+            <div class="khung">
+                <h2>1. Thời khóa biểu</h2>
+                <div class="hang">
+                    <label class="btn">Tải ảnh thời khóa biểu<input type="file" id="file" accept="image/*"
+                            hidden /></label>
+                    <button id="btn-xoa-tkb" class="btn">Xóa bảng</button>
+                </div>
+                <div class="thanh">
+                    <div id="thanh"></div>
+                </div>
+                <p id="ocr-tt" class="phu" aria-live="polite">Quét ảnh có thể sai, bạn sửa lại ô trong bảng nhé. Cũng có
+                    thể tự gõ.</p>
+                <div class="cuon">
+                    <table id="tkb"></table>
+                </div>
+            </div>
+
+            <div class="khung">
+                <h2>2. Học thêm</h2>
+                <div class="hang">
+                    <select id="ex-thu" aria-label="Thứ">
+                        <option value="2">T2</option>
+                        <option value="3">T3</option>
+                        <option value="4">T4</option>
+                        <option value="5">T5</option>
+                        <option value="6">T6</option>
+                        <option value="7">T7</option>
+                        <option value="8">CN</option>
+                    </select>
+                    <input id="ex-tu" placeholder="Từ 19:00" size="9" aria-label="Giờ bắt đầu" />
+                    <input id="ex-den" placeholder="Đến 20:30" size="9" aria-label="Giờ kết thúc" />
+                    <input id="ex-mon" list="ds-mon" placeholder="Môn (không bắt buộc)" aria-label="Môn học thêm" />
+                    <button id="btn-them-extra" class="btn">Thêm</button>
+                </div>
+                <p id="ex-tt" class="canhbao"></p>
+                <ul id="ds-extra" class="ds"></ul>
+            </div>
+
+            <div class="khung">
+                <h2>3. Công việc tuần này</h2>
+                <div class="hang">
+                    <select id="vi-thu" aria-label="Hạn vào thứ">
+                        <option value="2">T2</option>
+                        <option value="3">T3</option>
+                        <option value="4">T4</option>
+                        <option value="5">T5</option>
+                        <option value="6">T6</option>
+                        <option value="7">T7</option>
+                        <option value="8">CN</option>
+                    </select>
+                    <input id="vi-mon" list="ds-mon" placeholder="Môn, ví dụ Vật lí" aria-label="Môn" />
+                    <select id="vi-loai" aria-label="Loại">
+                        <option>Kiểm tra 15 phút</option>
+                        <option>Kiểm tra 1 tiết</option>
+                        <option>Kiểm tra học kì</option>
+                        <option>Bài tập / nộp bài</option>
+                        <option>Khác</option>
+                    </select>
+                    <label>Cần ôn <input id="vi-phut" type="number" min="15" step="5" value="60" style="width:70px" />
+                        phút</label>
+                    <input id="vi-ghi" placeholder="Ghi chú: học chương nào..." aria-label="Ghi chú" />
+                    <button id="btn-them-viec" class="btn">Thêm</button>
+                </div>
+                <p id="vi-tt" class="canhbao"></p>
+                <ul id="ds-viec" class="ds"></ul>
+            </div>
+
+            <div class="khung">
+                <h2>4. Môn nào học trước?</h2>
+                <p class="phu">Môn đứng trên được xếp giờ học sớm hơn khi cùng hạn.</p>
+                <ul id="ds-uu-tien" class="ds"></ul>
+            </div>
+
+            <div class="khung">
+                <h2>5. Giờ giấc (đồng hồ 24h)</h2>
+                <div class="hang">
+                    <label>Vào học sáng <input data-g="sang" data-kieu="gio" size="6" /></label>
+                    <label>Vào học chiều <input data-g="chieu" data-kieu="gio" size="6" /></label>
+                    <label>Phút / tiết <input data-g="tiet" type="number" min="1" style="width:70px" /></label>
+                    <label>Ra chơi (phút) <input data-g="nghi" type="number" min="0" style="width:70px" /></label>
+                    <label>Bắt đầu học từ <input data-g="batDau" data-kieu="gio" size="6" /></label>
+                    <label>Đi ngủ lúc <input data-g="ngu" data-kieu="gio" size="6" /></label>
+                    <label>Phút dành cho EduMate mỗi ngày <input data-g="edumate" type="number" min="10"
+                            style="width:70px" /></label>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <datalist id="ds-mon"></datalist>
+    <script src="script.js"></script>
+    <script src="tkb-ocr.js"></script>
+    <script src="personal.js"></script>
+</body>
+
+</html>

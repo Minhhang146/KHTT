@@ -20,20 +20,23 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body { 
+body {
   background-color: #f8fafc;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  color: var(--chu); 
+  color: var(--chu);
   line-height: 1.6;
-  padding: 0; /* Đổi từ 20px thành 0 để header ép sát mép trên */
+  padding: 0;
+  /* Đổi từ 20px thành 0 để header ép sát mép trên */
 }
 
 /* Container chính */
 .container {
   max-width: 900px;
-  margin: 20px auto 40px; /* Thêm margin-top 20px nhẹ nhàng cách header */
+  margin: 20px auto 40px;
+  /* Thêm margin-top 20px nhẹ nhàng cách header */
   background: var(--nen);
-  padding: 30px 40px; /* Giảm padding trên dưới từ 40px xuống 30px */
+  padding: 30px 40px;
+  /* Giảm padding trên dưới từ 40px xuống 30px */
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
@@ -137,8 +140,10 @@ body {
 }
 
 a {
-  text-decoration: none; /* Bỏ gạch chân */
-  color: inherit;        /* Thừa hưởng màu chữ của phần tử cha */
+  text-decoration: none;
+  /* Bỏ gạch chân */
+  color: inherit;
+  /* Thừa hưởng màu chữ của phần tử cha */
 }
 
 /* Header & Navbar */
@@ -171,8 +176,8 @@ header {
   gap: 8px;
 }
 
-#logo-span { 
-  color: var(--nhan); 
+#logo-span {
+  color: var(--nhan);
 }
 
 .subject-selection {
@@ -276,23 +281,47 @@ header {
   object-fit: cover;
 }
 
-#nav { display: flex; gap: 8px; list-style: none; }
+#nav {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
 
 #nav a {
-  display: block; padding: 8px 14px; border-radius: 6px;
-  color: var(--nhat); text-decoration: none; font-weight: 500;
+  display: block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: var(--nhat);
+  text-decoration: none;
+  font-weight: 500;
   transition: background .15s, color .15s;
 }
-#nav a:hover { background: #eef2fb; color: var(--nhan); }
-#nav a.active { color: var(--nhan); background: #eef2fb; }
-#nav a:focus-visible, #menu-btn:focus-visible {
-  outline: 2px solid var(--nhan); outline-offset: 2px;
+
+#nav a:hover {
+  background: #eef2fb;
+  color: var(--nhan);
+}
+
+#nav a.active {
+  color: var(--nhan);
+  background: #eef2fb;
+}
+
+#nav a:focus-visible,
+#menu-btn:focus-visible {
+  outline: 2px solid var(--nhan);
+  outline-offset: 2px;
 }
 
 #menu-btn {
-  display: none; background: none; border: 1px solid var(--vien);
-  border-radius: 6px; padding: 6px 10px; font-size: 1.2rem;
-  cursor: pointer; color: var(--chu);
+  display: none;
+  background: none;
+  border: 1px solid var(--vien);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--chu);
 }
 
 /* --- TRANG CÁC BÀI TẬP (PROBLEMS) --- */
@@ -332,7 +361,7 @@ header {
 
 /* Bảng chiếm 75% chiều ngang */
 .table-section {
-  flex: 0 0 75%; 
+  flex: 0 0 75%;
 }
 
 /* Ô vuông Chương bài học */
@@ -342,7 +371,7 @@ header {
   border: 1px solid var(--vien);
   border-radius: 6px;
   padding: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
 .chapter-sidebar h3 {
@@ -382,19 +411,19 @@ header {
 }
 
 .problem-table th:nth-child(1),
-.problem-table td:nth-child(1) { 
-  width: 15%; 
+.problem-table td:nth-child(1) {
+  width: 15%;
 }
 
 .problem-table th:nth-child(2),
-.problem-table td:nth-child(2) { 
-  width: 55%; 
+.problem-table td:nth-child(2) {
+  width: 55%;
 }
 
 .problem-table th:nth-child(3),
-.problem-table td:nth-child(3) { 
-  width: 30%; 
-  text-align: right; 
+.problem-table td:nth-child(3) {
+  width: 30%;
+  text-align: right;
 }
 
 #problem-list tr:hover {
@@ -542,20 +571,51 @@ header {
 
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 640px) {
-  #menu-btn { display: block; }
-  #nav {
-    display: none; position: absolute; top: 64px; left: 0; right: 0;
-    flex-direction: column; gap: 0; padding: 8px 20px 12px;
-    background: var(--nen); border-bottom: 1px solid var(--vien);
+  #menu-btn {
+    display: block;
   }
-  #nav.open { display: flex; }
+
+  #nav {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 20px 12px;
+    background: var(--nen);
+    border-bottom: 1px solid var(--vien);
+  }
+
+  #nav.open {
+    display: flex;
+  }
 
   .podium-card .step {
     width: 80px;
   }
+
   .podium-card .avatar {
     width: 56px;
     height: 56px;
   }
-}
 
+  /* Nút đăng xuất trên thanh menu */
+  #btn-logout {
+    padding: 6px 12px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--nhan);
+    background: var(--nen);
+    border: 1px solid var(--nhan);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  #btn-logout:hover {
+    color: #ffffff;
+    background: var(--nhan);
+  }
+}

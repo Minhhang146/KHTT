@@ -36,11 +36,36 @@ function showLoggedInUI() {
     if (streakEl) streakEl.textContent = localStorage.getItem("streak") || "0";
   }
 
+  // đã đăng nhập thì "Giới thiệu" được thay bằng "Học tập cá nhân hoá"
+  const linkGt = document.getElementById("link-gioi-thieu");
+  if (linkGt) {
+    linkGt.textContent = "Học tập cá nhân hoá";
+    linkGt.href = "personal.html";
+  }
+
+  // thêm nút Đăng xuất vào cạnh avatar (chỉ thêm 1 lần)
+  if (userProfile && !document.getElementById("btn-logout")) {
+    const nutThoat = document.createElement("button");
+    nutThoat.id = "btn-logout";
+    nutThoat.type = "button";
+    nutThoat.textContent = "Đăng xuất";
+    nutThoat.addEventListener("click", dangXuat);
+    userProfile.appendChild(nutThoat);
+  }
+
   // bấm vào avatar hoặc tên thì mở trang hồ sơ
   document.querySelectorAll(".user-avatar, .username").forEach((el) => {
-  el.style.cursor = "pointer";
-  el.addEventListener("click", () => (window.location.href = "profile.html"));
-});
+    el.style.cursor = "pointer";
+    el.addEventListener("click", () => (window.location.href = "profile.html"));
+  });
+}
+
+// Đăng xuất = xoá thông tin đăng nhập rồi về trang chủ
+function dangXuat() {
+  ["isLoggedIn", "username", "userId", "streak", "monChuyen"].forEach((k) =>
+    localStorage.removeItem(k),
+  );
+  window.location.href = "index.html";
 }
 
 // 2. Xử lý Submit Đăng nhập (Kết nối Backend Flask)
@@ -58,8 +83,8 @@ async function handleLoginSubmit(event) {
     });
     const data = await response.json();
 
-        if (data.success) {
-      // Lưu thông tin để đăng ký xong là coi như đã đăng nhập luôn
+    if (data.success) {
+      // Lưu thông tin để coi như đã đăng nhập
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("username", data.user.username);
       localStorage.setItem("userId", data.user.id);
@@ -73,9 +98,7 @@ async function handleLoginSubmit(event) {
       alert(data.message);
     }
   } catch (error) {
-    alert(
-      "Không kết nối được server. Dm m bật app.py !!!",
-    );
+    alert("Không kết nối được server. Dm m bật app.py !!!");
   }
 }
 

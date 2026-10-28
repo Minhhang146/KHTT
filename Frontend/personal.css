@@ -1,0 +1,241 @@
+/* personal.css - trang Học tập cá nhân hoá (dùng lại --nen, --chu, --nhat, --nhan, --vien của style.css) */
+.hoctap {
+    max-width: 1000px;
+    margin: 20px auto 60px;
+    padding: 0 16px;
+}
+
+.hoctap h1 {
+    margin-bottom: 12px;
+    color: var(--chu);
+}
+
+.hoctap h2 {
+    font-size: 1.15rem;
+    color: var(--chu);
+}
+
+.hoctap [hidden] {
+    display: none !important;
+}
+
+.hang {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.hang h2 {
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.phu {
+    color: var(--nhat);
+    font-size: 14px;
+}
+
+.canhbao {
+    color: #c27410;
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+.hoctap input,
+.hoctap select {
+    padding: 8px 10px;
+    font: inherit;
+    border: 1.5px solid var(--vien);
+    border-radius: 8px;
+}
+
+.hoctap input:focus-visible,
+.hoctap select:focus-visible,
+.hoctap button:focus-visible {
+    outline: 2px solid var(--nhan);
+    outline-offset: 2px;
+}
+
+.hoctap button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.hoctap label {
+    font-size: 14px;
+}
+
+/* Hai tab lớn: Lịch học / Thiết lập */
+.tab-chinh,
+.tabs-ngay {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.tab-chinh button,
+.tabs-ngay button {
+    padding: 8px 16px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--nhat);
+    background: var(--nen);
+    border: 1px solid var(--vien);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tab-chinh button.on,
+.tabs-ngay button.on {
+    color: #fff;
+    background: var(--nhan);
+    border-color: var(--nhan);
+}
+
+.khung {
+    background: var(--nen);
+    border: 1px solid var(--vien);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+/* Thanh tiến độ OCR */
+.thanh {
+    height: 6px;
+    background: #e8eefc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.thanh div {
+    width: 0;
+    height: 100%;
+    background: var(--nhan);
+    transition: width .2s;
+}
+
+/* Bảng thời khóa biểu */
+.cuon {
+    overflow-x: auto;
+}
+
+#tkb {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+#tkb th {
+    padding: 8px;
+    color: #fff;
+    background: var(--nhan);
+}
+
+#tkb th,
+#tkb td {
+    border: 1px solid var(--vien);
+    text-align: center;
+}
+
+#tkb td.nhan {
+    padding: 4px 10px;
+    font-weight: 600;
+    background: #f4f7fc;
+}
+
+#tkb tr.chia td {
+    border-top: 3px solid var(--chu);
+}
+
+#tkb td input {
+    width: 100%;
+    min-width: 90px;
+    padding: 6px;
+    text-align: center;
+    border-width: 2px;
+}
+
+#tkb td input.la {
+    border-color: #c27410;
+    background: #fdf1de;
+}
+
+/* Danh sách học thêm, công việc, ưu tiên */
+.ds {
+    list-style: none;
+}
+
+.ds li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--vien);
+}
+
+.ds button {
+    padding: 2px 10px;
+    cursor: pointer;
+    background: var(--nen);
+    border: 1px solid var(--vien);
+    border-radius: 6px;
+}
+
+/* Lịch trong ngày */
+.lich {
+    list-style: none;
+}
+
+.lich li {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    background: var(--nen);
+    border: 1px solid var(--vien);
+    border-left: 5px solid var(--nhat);
+    border-radius: 8px;
+}
+
+.lich time {
+    flex: 0 0 110px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.lich .m-truong {
+    border-left-color: #8a94a6;
+    background: #f4f6fa;
+}
+
+.lich .m-them {
+    border-left-color: #7b4bd8;
+}
+
+.lich .m-hoc {
+    border-left-color: #c27410;
+    background: #fdf8ef;
+}
+
+.lich .m-on {
+    border-left-color: #178a5a;
+}
+
+.lich .m-edumate {
+    border-left-color: var(--nhan);
+    background: #eef2fb;
+}
+
+@media (max-width: 640px) {
+    .lich li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}

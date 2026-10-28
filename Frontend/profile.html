@@ -1,113 +1,115 @@
 <!doctype html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.css"
-    />
-    <title>EduMate</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="style2.css" />
-    <link rel="stylesheet" href="style3.css" />
-  </head>
 
-  <body>
-    <header id="header">
-      <div id="header-inner">
-        <section class="right">
-          <a href="index.html" id="logo">
-            <img src="img/logo.webp" alt="Logo" />
-           <span>Edu<span id="logo-span">Mate</span></span>
-          </a>
-        </section>
-        <button id="menu-btn" aria-label="Mở menu" aria-expanded="false">☰</button>
-        <ul id="nav" class="center">
-          <li id="nav-gioi-thieu">
-            <a href="index.html" id="link-gioi-thieu" class="active">Giới thiệu</a>
-          </li>
-          <li id="nav-bai-tap">
-            <a href="subjects.html" id="link-bai-tap">Bài tập</a>
-          </li>
-          <li id="nav-cuoc-thi">
-           <a href="contest.html" id="link-cuoc-thi">Cuộc thi</a>
-          </li>
-          <li id="nav-xep-hang">
-           <a href="ranking.html" id="link-xep-hang">Xếp hạng</a>
-          </li>
-        </ul>
-        <!-- KHU VỰC TÀI KHOẢN -->
-        <div class="user-account-area">
-          <div id="auth-buttons">
-            <a href="login.html" class="auth-link">Đăng nhập</a>
-            <a href="register.html" class="auth-link">Đăng ký</a>
-          </div>
-          <!-- 2. Khi đã đăng nhập (mặc định thêm class hidden) -->
-          <div id="user-profile" class="hidden">
-            <div class="streak-box">🔥 <span>0</span></div>
-            <span class="username">Username</span>
-           <img src="img/avartar.webp" alt="Avatar" class="user-avatar" />
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.css" />
+  <title>EduMate</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style2.css" />
+  <link rel="stylesheet" href="style3.css" />
+</head>
+
+<body>
+  <header id="header">
+    <div id="header-inner">
+      <section class="right">
+        <a href="index.html" id="logo">
+          <img src="img/logo.webp" alt="Logo" />
+          <span>Edu<span id="logo-span">Mate</span></span>
+        </a>
+      </section>
+      <button id="menu-btn" aria-label="Mở menu" aria-expanded="false">☰</button>
+      <ul id="nav" class="center">
+        <li id="nav-gioi-thieu">
+          <a href="index.html" id="link-gioi-thieu" class="active">Giới thiệu</a>
+        </li>
+        <li id="nav-bai-tap">
+          <a href="subjects.html" id="link-bai-tap">Bài tập</a>
+        </li>
+        <li id="nav-cuoc-thi">
+          <a href="contest.html" id="link-cuoc-thi">Cuộc thi</a>
+        </li>
+        <li id="nav-xep-hang">
+          <a href="ranking.html" id="link-xep-hang">Xếp hạng</a>
+        </li>
+      </ul>
+      <!-- KHU VỰC TÀI KHOẢN -->
+      <div class="user-account-area">
+        <div id="auth-buttons">
+          <a href="login.html" class="auth-link">Đăng nhập</a>
+          <a href="register.html" class="auth-link">Đăng ký</a>
+        </div>
+        <!-- 2. Khi đã đăng nhập (mặc định thêm class hidden) -->
+        <div id="user-profile" class="hidden">
+          <div class="streak-box">🔥 <span>0</span></div>
+          <span class="username">Username</span>
+          <img src="img/avartar.webp" alt="Avatar" class="user-avatar" />
         </div>
       </div>
-    </header>
-
-    <!-- Giữ class "container" để đoạn báo lỗi trong profile.js vẫn chạy -->
-    <div class="container profile-card">
-        <!-- Avatar nằm giữa, to hơn trên thanh menu -->
-        <img id="pf-avatar" class="profile-avatar" src="img/avartar.webp" alt="Avatar" />
-
-        <h2 id="pf-username"></h2>
-        <p id="pf-bio" class="profile-bio"></p>
-
-        <!-- 3 ô thông số nằm ngang -->
-        <div class="profile-stats">
-            <div class="profile-stat">
-            <span class="stat-so" id="pf-score">0</span>
-            <span class="stat-nhan">Điểm</span>
-            </div>
-            <div class="profile-stat">
-            <span class="stat-so">🔥 <span id="pf-streak">0</span></span>
-            <span class="stat-nhan">Chuỗi ngày</span>
-            </div>
-            <div class="profile-stat">
-            <span class="stat-so stat-chu" id="pf-chuyen"></span>
-            <span class="stat-nhan">Môn chuyên</span>
-            </div>
-        </div>
     </div>
+  </header>
 
-    <!-- Nút mở form sửa -->
-    <button type="button" id="btn-sua" class="btn" style="margin-top:24px;">✏️ Sửa hồ sơ</button>
+  <!-- Giữ class "container" để đoạn báo lỗi trong profile.js vẫn chạy -->
+  <div class="container profile-card">
+    <!-- Avatar nằm giữa, to hơn trên thanh menu -->
+    <img id="pf-avatar" class="profile-avatar" src="img/avartar.webp" alt="Avatar" />
 
-    <!-- Lớp nền mờ phủ toàn màn hình, bên trong là hộp chứa form -->
-    <div id="sua-nen" class="modal-nen hidden">
-        <div class="modal-hop modal-nho" role="dialog" aria-modal="true" aria-labelledby="sua-tieu-de">
-            <div class="modal-dau">
-            <h3 id="sua-tieu-de">Sửa hồ sơ</h3>
-            <button type="button" id="btn-dong-sua" class="modal-dong" aria-label="Đóng">✕</button>
-            </div>
+    <h2 id="pf-username"></h2>
+    <p id="pf-bio" class="profile-bio"></p>
 
-            <!-- Các id bên trong giữ nguyên như cũ -->
-            <form id="form-sua" class="profile-form">
-                <label for="in-username">Tên hiển thị:</label>
-                <input type="text" id="in-username" maxlength="30" required>
-
-                <label for="in-bio">Giới thiệu:</label>
-                <textarea id="in-bio" maxlength="150" rows="3"></textarea>
-
-                <p id="sua-thong-bao"></p>
-
-                <div class="profile-form-nut">
-                    <button type="submit" class="btn">Lưu</button>
-                    <button type="button" id="btn-huy" class="btn">Hủy</button>
-                </div>
-            </form>
-        </div>
+    <!-- 3 ô thông số nằm ngang -->
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <span class="stat-so" id="pf-score">0</span>
+        <span class="stat-nhan">Điểm</span>
+      </div>
+      <div class="profile-stat">
+        <span class="stat-so">🔥 <span id="pf-streak">0</span></span>
+        <span class="stat-nhan">Chuỗi ngày</span>
+      </div>
+      <div class="profile-stat">
+        <span class="stat-so stat-chu" id="pf-chuyen"></span>
+        <span class="stat-nhan">Môn chuyên</span>
+      </div>
     </div>
+  </div>
 
-    <script src="profile.js"></script>
-    <script src="script.js"></script>
-  </body>
+  <!-- MỚI: nút sửa hồ sơ và đăng xuất, căn giữa trang -->
+  <div style="text-align:center; margin-top:24px;">
+    <button type="button" id="btn-sua" class="btn">✏️ Sửa hồ sơ</button>
+    <button type="button" id="btn-dang-xuat" class="btn">Đăng xuất</button>
+  </div>
+
+  <!-- Lớp nền mờ phủ toàn màn hình, bên trong là hộp chứa form -->
+  <div id="sua-nen" class="modal-nen hidden">
+    <div class="modal-hop modal-nho" role="dialog" aria-modal="true" aria-labelledby="sua-tieu-de">
+      <div class="modal-dau">
+        <h3 id="sua-tieu-de">Sửa hồ sơ</h3>
+        <button type="button" id="btn-dong-sua" class="modal-dong" aria-label="Đóng">✕</button>
+      </div>
+
+      <!-- Các id bên trong giữ nguyên như cũ -->
+      <form id="form-sua" class="profile-form">
+        <label for="in-username">Tên hiển thị:</label>
+        <input type="text" id="in-username" maxlength="30" required>
+
+        <label for="in-bio">Giới thiệu:</label>
+        <textarea id="in-bio" maxlength="150" rows="3"></textarea>
+
+        <p id="sua-thong-bao"></p>
+
+        <div class="profile-form-nut">
+          <button type="submit" class="btn">Lưu</button>
+          <button type="button" id="btn-huy" class="btn">Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="profile.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>
