@@ -1,0 +1,77 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Backend: Flask",
+            "type": "shell",
+            "command": "py app.py",
+            "options": {
+                "cwd": "${workspaceFolder}/Backend/script"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*Starting.*$",
+                    "endsPattern": "Running on"
+                }
+            },
+            "presentation": {
+                "panel": "dedicated",
+                "group": "edumate"
+            }
+        },
+        {
+            "label": "Frontend: http.server",
+            "type": "shell",
+            "command": "py -m http.server 8000",
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*Starting.*$",
+                    "endsPattern": "Serving HTTP"
+                }
+            },
+            "presentation": {
+                "panel": "dedicated",
+                "group": "edumate"
+            }
+        },
+        {
+            "label": "Mở trình duyệt",
+            "type": "shell",
+            "command": "Start-Sleep 3; Start-Process 'http://localhost:8000/index.html'",
+            "presentation": {
+                "reveal": "never",
+                "close": true
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "EduMate: Khởi động tất cả",
+            "dependsOn": [
+                "Backend: Flask",
+                "Frontend: http.server",
+                "Mở trình duyệt"
+            ],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
